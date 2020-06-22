@@ -11,7 +11,7 @@ spring:
 #資料庫設定
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/javanotes?serverTimezone=CTT&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+  url: jdbc:mysql://localhost:3306/blog?serverTimezone=CTT&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
   username: root
   password: root
 
@@ -19,6 +19,11 @@ logging:
  level:
   root: info
  file: log/blog.log
+ 
+#配置日誌
+mybatis-plus: 
+ configuration: 
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   
 #springMVC 用於MVC的頁面跳轉
 # mvc:
