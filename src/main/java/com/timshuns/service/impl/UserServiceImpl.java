@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
   }
 
   private String getMd5Result(String str) {
-    System.err.println(str);
     String ret = null;
     try {
       // 生成一個MD5加密計算摘要

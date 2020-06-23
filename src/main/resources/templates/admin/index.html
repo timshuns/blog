@@ -1,11 +1,19 @@
-<html>
-
-<head>
-	<title>title</title>
-</head>
-
-<body>
-	It works!
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments-admin :: head"></head>
+<body class="no-skin">
+	<!-- 上方功能列 -->
+	<th:block th:replace="admin/_fragments-admin :: navbar"></th:block>
+	<div class="main-container ace-save-state" id="main-container">
+		<!-- 左側選單 -->
+		<th:block th:replace="admin/_fragments-admin :: sidebar"></th:block>
+		<!-- 麵包屑 -->
+		<div class="main-content">
+			<div class="main-content-inner">
+				<th:block th:replace="admin/_fragments-admin :: breadcrumb"></th:block>
+			</div>
+		</div>
+	</div>
+	<th:block th:replace="admin/_fragments-admin :: script"></th:block>
 </body>
-
 </html>

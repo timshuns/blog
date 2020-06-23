@@ -7,7 +7,7 @@ server:
 
 spring:
  thymeleaf:
-  mode: HTML
+  mode: LEGACYHTML5
 #資料庫設定
  datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
