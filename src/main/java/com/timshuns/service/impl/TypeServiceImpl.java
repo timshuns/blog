@@ -30,10 +30,11 @@ public class TypeServiceImpl implements TypeService {
 
   @Transactional
   @Override
-  public List<Type> getTypesWithPage(long currentPage) {
+  public Page<Type> getTypes(long currentPage) {
     Page<Type> page = new Page<Type>(currentPage, pageSize);
+    page.setSize(1);
     typeMapper.selectPage(page, null);
-    return page.getRecords();
+    return page;
   }
 
   @Transactional

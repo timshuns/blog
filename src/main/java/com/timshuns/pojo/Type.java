@@ -14,5 +14,6 @@ public class Type {
   @TableId(type = IdType.AUTO)
   private Long id;
   private String name;
+  private Integer status;
 
 }

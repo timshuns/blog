@@ -1,6 +1,6 @@
 package com.timshuns.service;
 
-import java.util.List;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.pojo.Type;
 
 public interface TypeService {
@@ -8,7 +8,7 @@ public interface TypeService {
 
   Type getType(Long id);
 
-  List<Type> getTypesWithPage(long currentPage);
+  Page<Type> getTypes(long currentPage);
 
   Type updateType(Type type);
 

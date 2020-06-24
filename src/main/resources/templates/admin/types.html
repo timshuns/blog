@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="admin/_fragments-admin :: head"></head>
-
 <body class="no-skin">
 	<!-- 上方功能列 -->
 	<th:block th:replace="admin/_fragments-admin :: navbar"></th:block>
@@ -20,7 +18,7 @@
 							類別管理
 							<small>
 								<i class="ace-icon fa fa-angle-double-right"></i>
-								Static &amp; Dynamic Tables
+								[[${pages.hasPrevious()}]] [[${pages.hasNext()}]]
 							</small>
 						</h1>
 					</div>
@@ -36,20 +34,22 @@
 												<th class="center">項次</th>
 												<th class="center">類別名稱</th>
 												<th class="center">狀態</th>
-												<th></th>
+												<th>
+													<button type="button" class="btn btn-xs btn-success" onclick="addForm()" data-target="#exampleModal">
+														<i class="ace-icon glyphicon glyphicon-plus bigger-120"></i>
+													</button>
+												</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="center">1</td>
-												<td class="center">
-													<a href="#">java</a>
-												</td>
+											<tr th:each="type,status : ${pages.records}">
+												<td class="center" th:text="${status.count}"></td>
+												<td class="center" th:text="${type.name}" />
 												<td class="center hidden-480">
-													<span class="label label-sm label-warning">啟用</span>
+													<span class="label label-sm" th:classappend="${type.status==1} ? label-primary : label-warning" th:text="${type.status==1?'啟用':'停用'}"></span>
 												</td>
 												<td>
-													<div class="hidden-sm hidden-xs btn-group">
+													<div class="btn-group">
 														<button class="btn btn-xs btn-info">
 															<i class="ace-icon fa fa-pencil bigger-120"></i>
 														</button>
@@ -57,50 +57,41 @@
 															<i class="ace-icon fa fa-trash-o bigger-120"></i>
 														</button>
 													</div>
-													<div class="hidden-md hidden-lg">
-														<div class="inline pos-rel">
-															<button class="btn btn-minier btn-primary dropdown-toggle"
-																data-toggle="dropdown" data-position="auto">
-																<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-															</button>
-															<ul
-																class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-																<li>
-																	<a href="#" class="tooltip-info" data-rel="tooltip"
-																		title="View">
-																		<span class="blue">
-																			<i
-																				class="ace-icon fa fa-search-plus bigger-120"></i>
-																		</span>
-																	</a>
-																</li>
-																<li>
-																	<a href="#" class="tooltip-success"
-																		data-rel="tooltip" title="Edit">
-																		<span class="green">
-																			<i
-																				class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																		</span>
-																	</a>
-																</li>
-																<li>
-																	<a href="#" class="tooltip-error" data-rel="tooltip"
-																		title="Delete">
-																		<span class="red">
-																			<i
-																				class="ace-icon fa fa-trash-o bigger-120"></i>
-																		</span>
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</div>
 												</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<!-- /.span -->
+							</div>
+							<div class="text-center">
+								<ul class="pagination">
+									<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
+										<a href="?pageNumber=1">
+											<i class="ace-icon fa fa-angle-double-left"></i>
+										</a>
+									</li>
+									<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
+										<a th:href="@{'?pageNumber=' +${(pages.current-1)} }">
+											<i class="ace-icon fa fa-angle-left"></i>
+										</a>
+									</li>
+									<th:block th:each="pageNumber : ${pageNumbers}">
+										<li th:classappend="${pageNumber eq pages.current} ? active : ''">
+											<a th:href="@{'?pageNumber=' +${pageNumber} }">[[${pageNumber}]]</a>
+										</li>
+									</th:block>
+									<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
+										<a th:href="@{'?pageNumber=' +${(pages.current+1)} }">
+											<i class="ace-icon fa fa-angle-right"></i>
+										</a>
+									</li>
+									<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
+										<a th:href="@{'?pageNumber=' +${pages.pages} }">
+											<i class="ace-icon fa fa-angle-double-right"></i>
+										</a>
+									</li>
+								</ul>
 							</div>
 							<!-- /.row -->
 							<div class="hr hr-18 dotted hr-double"></div>
@@ -110,7 +101,72 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function addForm() {
+			$('#formModal').modal('toggle');
+		}
+
+		function addSubmit() {
+			const form = $('form');
+			var name = $('#typeName').val();
+			var status = $('#typeStatus').val();
+
+			$.ajax({
+				url : form.prop("action"),
+				type : form.prop("method"),
+				data : {
+					name : name,
+					status : status
+				}
+			}).done(function(res) {
+				location.reload();
+			}).fail(function(res) {
+				alert(res.responseText);
+			})
+		}
+	</script>
 	<th:block th:replace="admin/_fragments-admin :: script"></th:block>
 </body>
-
+<!-- 新增頁面 -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="widget-header">
+				<h4 class="widget-title">新增類別</h4>
+				<div class="widget-toolbar">
+					<a href="#" data-action="close" data-dismiss="modal" aria-label="Close">
+						<i class="ace-icon fa fa-times"></i>
+					</a>
+				</div>
+			</div>
+			<form class="form-horizontal" role="form" method="POST" th:action="@{/admin/types/save}">
+				<div class="modal-body">
+					<div class="widget-main no-padding">
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 類別名稱 </label>
+							<div class="col-sm-9">
+								<input type="text" id="typeName" name="name" placeholder="Name" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 是否啟用 </label>
+							<div class="col-sm-9">
+								<select class="col-xs-10 col-sm-5" id="typeStatus" name="status">
+									<option value="1" selected>啟用</option>
+									<option value="0">停用</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-success" onclick="addSubmit()">
+						送出
+						<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 </html>
