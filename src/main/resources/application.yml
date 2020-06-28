@@ -31,4 +31,7 @@ mybatis-plus:
 #   prefix: /WEB-INF/page/
 #   suffix: .jsp
 
+page: 
+ size: 10
+
 

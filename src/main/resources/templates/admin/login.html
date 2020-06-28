@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta charset="utf-8" />
-<title>Login</title>
-<meta name="description" content="User login page" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-<!-- bootstrap & fontawesome -->
-<link rel="stylesheet" href="assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" />
-<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" th:href="@{/assets/font-awesome/4.5.0/css/font-awesome.min.css}" />
-<link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" th:href="@{/assets/css/fonts.googleapis.com.css}" />
-<link rel="stylesheet" href="assets/css/ace.min.css" th:href="@{/assets/css/ace.min.css}" />
-<link rel="stylesheet" href="assets/css/ace-rtl.min.css" th:href="@{/assets/css/ace-rtl.min.css}" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8" />
+	<title>Login</title>
+	<meta name="description" content="User login page" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	<!-- bootstrap & fontawesome -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" />
+	<link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css"
+		th:href="@{/assets/font-awesome/4.5.0/css/font-awesome.min.css}" />
+	<link rel="stylesheet" href="assets/css/fonts.googleapis.com.css"
+		th:href="@{/assets/css/fonts.googleapis.com.css}" />
+	<link rel="stylesheet" href="assets/css/ace.min.css" th:href="@{/assets/css/ace.min.css}" />
+	<link rel="stylesheet" href="assets/css/ace-rtl.min.css" th:href="@{/assets/css/ace-rtl.min.css}" />
 </head>
+
 <body class="login-layout light-login">
 	<div class="main-container">
 		<div class="main-content">
@@ -41,19 +45,22 @@
 											<fieldset>
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" name="userName" placeholder="Username" />
+														<input type="text" class="form-control" name="userName"
+															placeholder="Username" />
 														<i class="ace-icon fa fa-user"></i>
 													</span>
 												</label>
 												<label class="block clearfix">
 													<span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" name="password" placeholder="Password" />
+														<input type="password" class="form-control" name="password"
+															placeholder="Password" />
 														<i class="ace-icon fa fa-lock"></i>
 													</span>
 												</label>
 												<div class="space"></div>
 												<div class="clearfix">
-													<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+													<button type="submit"
+														class="width-35 pull-right btn btn-sm btn-primary">
 														<i class="ace-icon fa fa-key"></i>
 														<span class="bigger-110">Login</span>
 													</button>
@@ -65,7 +72,17 @@
 											<span class="bigger-110"></span>
 										</div>
 										<div class="space-6"></div>
-										<div class="social-login center"></div>
+										<th:block th:if="${message != null}">
+											<div class="social-login center">
+												<div class="alert alert-danger">
+													<strong>
+														<i class="ace-icon fa fa-times"></i>
+														[[${message}]]
+													</strong>
+													<br />
+												</div>
+											</div>
+										</th:block>
 									</div>
 									<!-- /.widget-main -->
 									<div class="toolbar clearfix">
@@ -91,4 +108,5 @@
 	<!--[if !IE]> -->
 	<script src="js/jquery-2.1.4.min.js" th:src="@{/assets/js/jquery-2.1.4.min.js}"></script>
 </body>
+
 </html>

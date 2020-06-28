@@ -8,29 +8,30 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
 @Aspect
 @Component
+@Slf4j
 public class LogAspect {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Pointcut("execution(* com.timshuns..*.*(..))")
   public void log() {
-    logger.info("------log------");
+    log.info("------log------");
   }
 
   @Before("log()")
   public void doBefore() {
-    logger.info("------doBefore------");
+    log.info("------doBefore------");
   }
 
   @After("log()")
   public void doAfter() {
-    logger.info("------doAfter------");
+    log.info("------doAfter------");
   }
 
   @AfterReturning(returning = "result", pointcut = "log()")
   public void doAferReturn(Object result) {
-    logger.info("result:{}", result);
+    log.info("result:{}", result);
   }
 }

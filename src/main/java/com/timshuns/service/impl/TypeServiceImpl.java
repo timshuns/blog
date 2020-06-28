@@ -2,24 +2,37 @@ package com.timshuns.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.mapper.TypeMapper;
 import com.timshuns.pojo.Type;
 import com.timshuns.service.TypeService;
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
+@Slf4j
 public class TypeServiceImpl implements TypeService {
-  private static final long pageSize = 10;
 
-  @Autowired private TypeMapper typeMapper;
+  @Value("${page.size}")
+  private long pageSize;
+
+  @Autowired
+  private TypeMapper typeMapper;
 
   @Transactional
   @Override
-  public Type saveType(Type type) {
-    typeMapper.insert(type);
-    return type;
+  public boolean saveType(Type type) {
+    // 新增失敗，返回空值
+    boolean result = false;
+    try {
+      result = (typeMapper.insert(type) > 0);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+    return result;
   }
 
   @Transactional
@@ -31,25 +44,41 @@ public class TypeServiceImpl implements TypeService {
   @Transactional
   @Override
   public Page<Type> getTypes(long currentPage) {
+    System.err.println("pageSize:"+pageSize);
     Page<Type> page = new Page<Type>(currentPage, pageSize);
-    page.setSize(1);
+    // page.setSize(1);
     typeMapper.selectPage(page, null);
     return page;
   }
 
   @Transactional
   @Override
-  public Type updateType(Type type) {
-    int result = typeMapper.updateById(type);
-    if (result == 0) {
-      return null;
+  public boolean updateType(Type type) {
+    // 失敗，返回空值
+    boolean result = false;
+    try {
+      result = (typeMapper.updateById(type) > 0);
+    } catch (Exception e) {
+      log.error(e.getMessage());
     }
-    return type;
+    return result;
   }
 
   @Transactional
   @Override
-  public void deleteType(Long id) {
-    typeMapper.deleteById(id);
+  public boolean deleteType(Long id) {
+    // 失敗，返回空值
+    boolean result = false;
+    try {
+      result = (typeMapper.deleteById(id) > 0);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+    return result;
+  }
+
+  @Override
+  public List<Type> getAllTypes() {
+    return typeMapper.selectList(null);
   }
 }

@@ -8,9 +8,10 @@
 <link rel="stylesheet" href="assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" />
 <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" th:href="@{/assets/font-awesome/4.5.0/css/font-awesome.min.css}" />
 <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" th:href="@{/assets/css/fonts.googleapis.com.css}" />
-<link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" th:href="@{/assets/css/ace.min.css}" />
 <link rel="stylesheet" href="assets/css/ace-skins.min.css" th:href="@{/assets/css/ace-skins.min.css}" />
 <link rel="stylesheet" href="assets/css/ace-rtl.min.css" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" href="assets/css/select2.min.css" th:href="@{/assets/css/select2.min.css}"/>
+<link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" th:href="@{/assets/css/ace.min.css}" />
 <script src="assets/js/ace-extra.min.js" th:src="@{/assets/js/ace-extra.min.js}"></script>
 </head>
 <body class="no-skin">
@@ -27,6 +28,8 @@
 		<!-- ace scripts -->
 		<script src="assets/js/ace-elements.min.js" th:src="@{/assets/js/ace-elements.min.js}"></script>
 		<script src="assets/js/ace.min.js" th:src="@{/assets/js/ace.min.js}"></script>
+		<script src="assets/js/bootbox.js" th:src="@{/assets/js/bootbox.js}"></script>
+		<script src="assets/js/select2.min.js" th:src="@{/assets/js/select2.min.js}"></script>
 		<script type="text/javascript">
 			try {
 				ace.settings.loadState('main-container')
@@ -351,6 +354,13 @@
 					<b class="arrow"></b>
 				</li>
 				<li class="">
+					<a th:href="@{/admin/blogs/index}">
+						<i class="menu-icon fa fa-pencil-square-o"></i>
+						<span class="menu-text"> 文章管理 </span>
+					</a>
+					<b class="arrow"></b>
+				</li>
+				<li class="">
 					<a th:href="@{/admin/types/index}">
 						<i class="menu-icon fa fa-list-ul"></i>
 						<span class="menu-text"> 類別管理 </span>
@@ -358,7 +368,7 @@
 					<b class="arrow"></b>
 				</li>
 				<li class="">
-					<a href="widgets.html">
+					<a th:href="@{/admin/tags/index}">
 						<i class="menu-icon fa fa-tag"></i>
 						<span class="menu-text"> 標籤管理 </span>
 					</a>
@@ -539,52 +549,7 @@
 							<b class="arrow"></b>
 						</li>
 					</ul>
-				</li>
-				<li class="">
-					<a href="#" class="dropdown-toggle">
-						<i class="menu-icon fa fa-pencil-square-o"></i>
-						<span class="menu-text"> Forms </span>
-						<b class="arrow fa fa-angle-down"></b>
-					</a>
-					<b class="arrow"></b>
-					<ul class="submenu">
-						<li class="">
-							<a href="form-elements.html">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Form Elements
-							</a>
-							<b class="arrow"></b>
-						</li>
-						<li class="">
-							<a href="form-elements-2.html">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Form Elements 2
-							</a>
-							<b class="arrow"></b>
-						</li>
-						<li class="">
-							<a href="form-wizard.html">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Wizard &amp; Validation
-							</a>
-							<b class="arrow"></b>
-						</li>
-						<li class="">
-							<a href="wysiwyg.html">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Wysiwyg &amp; Markdown
-							</a>
-							<b class="arrow"></b>
-						</li>
-						<li class="">
-							<a href="dropzone.html">
-								<i class="menu-icon fa fa-caret-right"></i>
-								Dropzone File Upload
-							</a>
-							<b class="arrow"></b>
-						</li>
-					</ul>
-				</li>
+				</li>				
 				<li class="">
 					<a href="calendar.html">
 						<i class="menu-icon fa fa-calendar"></i>
