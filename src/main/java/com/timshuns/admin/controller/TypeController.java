@@ -1,13 +1,15 @@
 package com.timshuns.admin.controller;
 
 import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,13 +23,13 @@ import com.timshuns.util.PageUtil;
 @RequestMapping("/admin/types")
 public class TypeController {
 
-  @Autowired private TypeService typeService;
+  @Autowired
+  private TypeService typeService;
 
   /** 類別起始頁面 */
   @GetMapping("/index")
-  public String readTypePage(
-      Model model,
-      @RequestParam(value = "pageNumber", required = false, defaultValue = "1") String pageNumber) {
+  public String readTypePage(Model model,
+      @RequestParam(value = "pageNumber", required = false) String pageNumber) {
     // 參數判斷
     Long pageNumberLong = 1L;
 
@@ -37,9 +39,23 @@ public class TypeController {
       // 轉換失敗，改用預設值
     }
 
-    Page<Type> pages = typeService.getTypes(1L);
-    pages.setCurrent(pageNumberLong);
-    int[] pageNumbers = PageUtil.pageNumbers(pages);
+    Page<Type> pages = typeService.getTypes(pageNumberLong);
+
+    // 查無資料
+    if (pages == null) {
+      model.addAttribute("pages", null);
+      return "admin/types";
+    }
+
+    // 判斷當前頁數是否正確
+    if (pageNumberLong > pages.getPages()) {
+      pages = typeService.getTypes(pages.getPages());
+    } else if (pageNumberLong <= 0) {
+      pages.setCurrent(1L);
+    } else {
+      pages.setCurrent(pageNumberLong);
+    }
+    List<Integer> pageNumbers = PageUtil.pageNumbers(pages);
     model.addAttribute("pages", pages);
     model.addAttribute("pageNumbers", pageNumbers);
     return "admin/types";
@@ -48,13 +64,45 @@ public class TypeController {
   /** 新增類別 */
   @PostMapping("/save")
   @ResponseBody
-  public ResponseEntity<String> saveType(
-      @RequestParam("name") String name, @RequestParam("status") int status) {
+  public ResponseEntity<String> saveType(@RequestParam("name") String name,
+      @RequestParam("status") int status) {
     Type type = new Type();
     type.setName(name);
     type.setStatus(status);
-    typeService.saveType(type);
 
-    return ResponseEntity.ok("");
+    if (typeService.saveType(type)) {
+      return ResponseEntity.ok("新增成功");
+    } else {
+      return new ResponseEntity<String>("新增失敗", HttpStatus.BAD_REQUEST);
+    }
+
+  }
+
+  /** 修改類別 */
+  @PutMapping("/update")
+  @ResponseBody
+  public ResponseEntity<String> updateType(
+      @RequestParam(required = false, name = "name") String name,
+      @RequestParam("status") int status, @RequestParam("id") long id) {
+    Type type = new Type();
+    type.setId(id);
+    type.setName(name);
+    type.setStatus(status);
+    if (typeService.updateType(type)) {
+      return ResponseEntity.ok("修改成功");
+    } else {
+      return new ResponseEntity<String>("修改失敗", HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  /** 刪除類別 */
+  @DeleteMapping("/delete")
+  @ResponseBody
+  public ResponseEntity<String> deleteType(@RequestParam("id") long id) {
+    if (typeService.deleteType(id)) {
+      return ResponseEntity.ok("刪除成功");
+    } else {
+      return new ResponseEntity<String>("刪除失敗", HttpStatus.BAD_REQUEST);
+    }
   }
 }

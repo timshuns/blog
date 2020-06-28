@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="admin/_fragments-admin :: head"></head>
+
 <body class="no-skin">
 	<!-- 上方功能列 -->
 	<th:block th:replace="admin/_fragments-admin :: navbar"></th:block>
@@ -15,10 +17,10 @@
 				<div class="page-content">
 					<div class="page-header">
 						<h1>
-							類別管理
+							管理
 							<small>
 								<i class="ace-icon fa fa-angle-double-right"></i>
-								[[${pages.hasPrevious()}]] [[${pages.hasNext()}]]
+								類別管理
 							</small>
 						</h1>
 					</div>
@@ -31,68 +33,87 @@
 									<table id="simple-table" class="table  table-bordered table-hover">
 										<thead>
 											<tr>
-												<th class="center">項次</th>
+												<th class="center"></th>
 												<th class="center">類別名稱</th>
 												<th class="center">狀態</th>
 												<th>
-													<button type="button" class="btn btn-xs btn-success" onclick="addForm()" data-target="#exampleModal">
+													<button type="button" class="btn btn-xs btn-success"
+														onclick="addForm()" data-target="#exampleModal">
 														<i class="ace-icon glyphicon glyphicon-plus bigger-120"></i>
 													</button>
 												</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="type,status : ${pages.records}">
-												<td class="center" th:text="${status.count}"></td>
-												<td class="center" th:text="${type.name}" />
-												<td class="center hidden-480">
-													<span class="label label-sm" th:classappend="${type.status==1} ? label-primary : label-warning" th:text="${type.status==1?'啟用':'停用'}"></span>
-												</td>
-												<td>
-													<div class="btn-group">
-														<button class="btn btn-xs btn-info">
-															<i class="ace-icon fa fa-pencil bigger-120"></i>
-														</button>
-														<button class="btn btn-xs btn-danger">
-															<i class="ace-icon fa fa-trash-o bigger-120"></i>
-														</button>
-													</div>
-												</td>
-											</tr>
+											<th:block th:if="${pages != null}">
+												<tr th:each="type,status : ${pages.records}">
+													<td class="center" th:text="${status.count}">[[type.name]]</td>
+													<td class="center" th:id="'name_'+${type.id}"
+														th:text="${type.name}" />
+													<td class="center hidden-480">
+														<span class="label label-sm"
+															th:classappend="${type.status==1} ? label-primary : label-warning"
+															th:text="${type.status==1?'啟用':'停用'}"
+															th:id="'status_'+${type.id}"></span>
+													</td>
+													<td>
+														<div class="btn-group">
+															<button class="btn btn-xs btn-info"
+																th:onclick="'updateForm('+${type.id}+')'">
+																<i class="ace-icon fa fa-pencil bigger-120"></i>
+															</button>
+															<button class="btn btn-xs btn-danger"
+																th:onclick="'deleteForm('+${type.id}+')'">
+																<i class="ace-icon fa fa-trash-o bigger-120"></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+											</th:block>
+											<th:block th:if="${pages == null}">
+												<tr>
+													<td class="center" colspan="4" th:text="尚無資料"></td>
+												</tr>
+											</th:block>
 										</tbody>
 									</table>
 								</div>
 								<!-- /.span -->
 							</div>
-							<div class="text-center">
-								<ul class="pagination">
-									<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
-										<a href="?pageNumber=1">
-											<i class="ace-icon fa fa-angle-double-left"></i>
-										</a>
-									</li>
-									<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
-										<a th:href="@{'?pageNumber=' +${(pages.current-1)} }">
-											<i class="ace-icon fa fa-angle-left"></i>
-										</a>
-									</li>
-									<th:block th:each="pageNumber : ${pageNumbers}">
-										<li th:classappend="${pageNumber eq pages.current} ? active : ''">
-											<a th:href="@{'?pageNumber=' +${pageNumber} }">[[${pageNumber}]]</a>
+							<th:block th:if="${pages != null}">
+								<div class="text-center">
+									<ul class="pagination">
+										<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
+											<a th:href="@{/admin/types/index(pageNumber=1)}">
+												<i class="ace-icon fa fa-angle-double-left"></i>
+											</a>
 										</li>
-									</th:block>
-									<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
-										<a th:href="@{'?pageNumber=' +${(pages.current+1)} }">
-											<i class="ace-icon fa fa-angle-right"></i>
-										</a>
-									</li>
-									<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
-										<a th:href="@{'?pageNumber=' +${pages.pages} }">
-											<i class="ace-icon fa fa-angle-double-right"></i>
-										</a>
-									</li>
-								</ul>
-							</div>
+										<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
+											<a
+												th:href="@{/admin/types/index(pageNumber=${pages.hasPrevious()?(pages.current-1):pages.current})}">
+												<i class="ace-icon fa fa-angle-left"></i>
+											</a>
+										</li>
+										<th:block th:each="pageNumber : ${pageNumbers}">
+											<li th:classappend="${pageNumber eq pages.current} ? active : ''">
+												<a
+													th:href="@{/admin/types/index(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+											</li>
+										</th:block>
+										<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
+											<a th:href="@{/admin/types/index(pageNumber=${pages.hasNext()
+											?(pages.current+1):pages.current})}">
+												<i class="ace-icon fa fa-angle-right"></i>
+											</a>
+										</li>
+										<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
+											<a th:href="@{/admin/types/index(pageNumber=${pages.pages})}">
+												<i class="ace-icon fa fa-angle-double-right"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</th:block>
 							<!-- /.row -->
 							<div class="hr hr-18 dotted hr-double"></div>
 						</div>
@@ -104,25 +125,86 @@
 	<script type="text/javascript">
 		function addForm() {
 			$('#formModal').modal('toggle');
+			var form = $('#form');
+			var addUrl = '[[@{/admin/types/save}]]';
+			form.prop('action', addUrl);
+			$("#method").val("POST");
+			$("#formTitle").text("新增類別");
 		}
 
-		function addSubmit() {
-			const form = $('form');
+		function updateForm(id) {
+			$('#formModal').modal('toggle');
+			var form = $('#form');
+			var updateUrl = '[[@{/admin/types/update}]]';
+			var typeName = $("#name_" + id).text();
+			var typeStatus = $("#status_" + id).text();
+			var typeStatusVal = typeStatus == '停用' ? 0 : 1;
+
+			$("#typeName").val(typeName);
+			$("#typeStatus").val(typeStatusVal);
+			$("#typeId").val(id);
+			$("#method").val("PUT");
+			$("#formTitle").text("修改類別");
+			form.prop('action', updateUrl);
+		}
+
+		function submitForm() {
+			var form = $('#form');
 			var name = $('#typeName').val();
 			var status = $('#typeStatus').val();
+			var id = $("#typeId").val();
+			var method = $("#method").val();
+
+			data = {
+				name: name,
+				status: status,
+				id: id
+			};
 
 			$.ajax({
-				url : form.prop("action"),
-				type : form.prop("method"),
-				data : {
-					name : name,
-					status : status
-				}
-			}).done(function(res) {
+				url: form.prop("action"),
+				type: method,
+				data: data
+			}).done(function (res) {
+				alert(res);
 				location.reload();
-			}).fail(function(res) {
-				alert(res.responseText);
+			}).fail(function (res) {
+				alert(res.responseJSON);
 			})
+		}
+
+		function deleteForm(id) {
+			var typeName = $("#name_" + id).text();
+			bootbox.dialog({
+				message: '<div class="blue lighter bigger">' +
+					'<h4 class="blue">是否要刪除 ' +
+					typeName + ' ?</h4></div>',
+				buttons: {
+					"danger": {
+						"label": "刪除",
+						"className": "btn-sm btn-danger",
+						"callback": function () {
+
+							$.ajax({
+								url: '[[@{/admin/types/delete}]]',
+								type: 'DELETE',
+								data: {
+									id: id
+								}
+							}).done(function (res) {
+								alert(res);
+								location.href = '[[@{/admin/types/index}]]';
+							}).fail(function (res) {
+								alert(res.responseJSON);
+							})
+						}
+					},
+					"button": {
+						"label": "取消",
+						"className": "btn-sm"
+					}
+				}
+			});
 		}
 	</script>
 	<th:block th:replace="admin/_fragments-admin :: script"></th:block>
@@ -132,20 +214,21 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="widget-header">
-				<h4 class="widget-title">新增類別</h4>
+				<h4 class="widget-title" id="formTitle">新增</h4>
 				<div class="widget-toolbar">
 					<a href="#" data-action="close" data-dismiss="modal" aria-label="Close">
 						<i class="ace-icon fa fa-times"></i>
 					</a>
 				</div>
 			</div>
-			<form class="form-horizontal" role="form" method="POST" th:action="@{/admin/types/save}">
+			<form id="form" class="form-horizontal" role="form">
 				<div class="modal-body">
 					<div class="widget-main no-padding">
 						<div class="form-group">
 							<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 類別名稱 </label>
 							<div class="col-sm-9">
-								<input type="text" id="typeName" name="name" placeholder="Name" class="col-xs-10 col-sm-5" />
+								<input type="text" id="typeName" name="name" placeholder="Name"
+									class="col-xs-10 col-sm-5" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -160,13 +243,16 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-sm btn-success" onclick="addSubmit()">
+					<button type="button" class="btn btn-sm btn-success" onclick="submitForm()">
 						送出
 						<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
 					</button>
 				</div>
+				<input type="hidden" id="typeId" />
+				<input type="hidden" id="method" />
 			</form>
 		</div>
 	</div>
 </div>
+
 </html>
