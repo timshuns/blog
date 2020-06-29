@@ -44,6 +44,7 @@ public class TypeServiceImpl implements TypeService {
   @Transactional
   @Override
   public Page<Type> getTypes(long currentPage) {
+    System.err.println("pageSize:"+pageSize);
     Page<Type> page = new Page<Type>(currentPage, pageSize);
     // page.setSize(1);
     typeMapper.selectPage(page, null);

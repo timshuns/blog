@@ -3,7 +3,6 @@ package com.timshuns.service;
 import java.util.List;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.pojo.Tag;
-import com.timshuns.pojo.Type;
 
 public interface TagService {
   
