@@ -128,11 +128,10 @@
 		function updateForm(id) {
 			$('#formModal').modal('toggle');
 			var form = $('#form');
-			var updateUrl = '[[@{/admin/tags/update}]]';
+			var updateUrl = '[[@{/admin/tags/update/}]]'+id;
 			var tagName = $("#name_" + id).text();
 
 			$("#tagName").val(tagName);
-			$("#tagId").val(id);
 			$("#method").val("PUT");
 			$("#formTitle").text("修改標籤");
 			form.prop('action', updateUrl);
@@ -141,12 +140,10 @@
 		function submitForm() {
 			var form = $('#form');
 			var name = $('#tagName').val();
-			var id = $("#tagId").val();
 			var method = $("#method").val();
 
 			data = {
-				name: name,
-				id: id
+				name: name
 			};
 
 			$.ajax({
@@ -174,7 +171,7 @@
 						"callback": function () {
 
 							$.ajax({
-								url: '[[@{/admin/tags/delete}]]',
+								url: '[[@{/admin/tags/delete/}]]'+id,
 								type: 'DELETE',
 								data: {
 									id: id
@@ -227,7 +224,6 @@
 						<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
 					</button>
 				</div>
-				<input type="hidden" id="tagId" />
 				<input type="hidden" id="method" />
 			</form>
 		</div>

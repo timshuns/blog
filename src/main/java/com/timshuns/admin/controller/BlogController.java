@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,10 +41,28 @@ public class BlogController {
   public String readBlogCreatePage(Model model) {
     // 取得類別
     List<Type> types = typeService.getAllTypes();
-    model.addAttribute("types", types);
-
     List<Tag> tags = tagService.getAllTags();
+    
     model.addAttribute("tags", tags);
+    model.addAttribute("types", types);
+    
+    return "/admin/blogs-create";
+  }
+  
+  @GetMapping("/updatePage/{id}")
+  public String readBlogUpdatePage(Model model,@PathVariable Long id) {
+    // 取得類別
+    List<Type> types = typeService.getAllTypes();
+    List<Tag> tags = tagService.getAllTags();
+    
+    List<Long> tagIds = blogTagService.selectByBlogId(id);
+    
+    Blog blog = blogService.getBlog(id);
+    
+    model.addAttribute("types", types);
+    model.addAttribute("tags", tags);
+    model.addAttribute("blog",blog);
+    model.addAttribute("tagIds",tagIds);
 
     return "/admin/blogs-create";
   }
@@ -66,6 +85,7 @@ public class BlogController {
     // 查無資料
     if (pages == null) {
       model.addAttribute("pages", null);
+      System.err.println("pages is null" ); 
       return "admin/blogs";
     }
 

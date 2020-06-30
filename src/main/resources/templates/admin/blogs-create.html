@@ -16,10 +16,10 @@
 				<div class="page-content">
 					<div class="page-header center">
 						<h1>
-							新增文章
+							[[${blog == null?'新增':'修改'}]]文章
 						</h1>
 					</div>
-					<form class="form-horizontal" method="POST" th:action="@{/admin/blogs/save}">
+					<form class="form-horizontal" method="POST" th:action="@{${blog == null? '/admin/blogs/save':'/admin/blogs/update/'+blog.id}}">
 						<!-- 內容 -->
 						<div class="row col-sm-offset-2">
 							<!--標題-->
@@ -28,7 +28,7 @@
 								</label>
 								<div class="col-sm-9">
 									<input type="text" id="form-field-1" placeholder="標題" class="col-xs-12 col-sm-6"
-										name="title" />
+										name="title" th:value="${blog != null ?blog.title:''}"/>
 								</div>
 							</div>
 							<!--類別-->
@@ -40,7 +40,8 @@
 										data-placeholder="Click to Choose...">
 										<option value="">&nbsp;</option>
 										<th:block th:each="type : ${types}">
-											<option th:value="${type.id}">[[${type.name}]]</option>
+											<option th:value="${type.id}" 
+											th:selected="${blog!=null?blog.typeId eq type.id:false}">[[${type.name}]]</option>
 										</th:block>
 									</select>
 								</div>
@@ -53,7 +54,8 @@
 									<select name="tags" class="select2 col-xs-12 col-sm-6"
 										data-placeholder="Click to Choose..." multiple="multiple">
 										<th:block th:each="tag : ${tags}">
-											<option th:value="${tag.id}">[[${tag.name}]]</option>
+											<option th:value="${tag.id}"
+											th:selected="${tagIds!=null?#lists.contains(tagIds, tag.id):false}">[[${tag.name}]]</option>
 										</th:block>
 									</select>
 								</div>
@@ -64,7 +66,8 @@
 								</label>
 								<div class="col-sm-9 checkbox">
 									<label class="block">
-										<input name="published" type="checkbox" class="ace input-lg" />
+										<input name="published" type="checkbox" class="ace input-lg" 
+										th:checked="${blog!=null?blog.published:false}"/>
 										<span class="lbl bigger-120"></span>
 									</label>
 								</div>
@@ -77,18 +80,18 @@
 								<div class="widget-header widget-header-small"></div>
 								<div class="widget-body">
 									<div id="content-editormd" class="widget-main no-padding">
-										<textarea style="display:none;" name="content"></textarea>
+										<textarea style="display:none;" name="content" th:text="${blog !=null?blog.content:''}"></textarea>
 									</div>
 								</div>
 								<div class="widget-toolbox padding-4 clearfix">
 									<div class="btn-group pull-right">
-										<button class="btn btn-sm btn-primary">
+										<button class="btn btn-sm btn-primary" type="submit" >
 											<i class="ace-icon fa fa-floppy-o bigger-125"></i>
 											新增
 										</button>
 									</div>
 									<div class="btn-group pull-right">
-										<button class="btn btn-sm btn-danger" type="submit">
+										<button class="btn btn-sm btn-danger" type="button" onclick="returnPage()">
 											<i class="ace-icon fa fa-times bigger-125"></i>
 											返回
 										</button>
@@ -118,6 +121,10 @@
 				path: "[[@{/editor-md/lib/}]]"
 			});
 		});
+		
+		function returnPage(){
+			location.href = '[[@{/admin/blogs/index}]]';
+		}
 	</script>
 </body>
 

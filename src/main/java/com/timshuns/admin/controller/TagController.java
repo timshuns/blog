@@ -1,6 +1,7 @@
 package com.timshuns.admin.controller;
 
 import java.util.List;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,10 +77,10 @@ public class TagController {
   }
 
   /** 修改類別 */
-  @PutMapping("/update")
+  @PutMapping("/update/{id}")
   @ResponseBody
   public ResponseEntity<String> updateTag(
-      @RequestParam(required = false, name = "name") String name, @RequestParam("id") long id) {
+      @RequestParam(required = false, name = "name") String name, @PathVariable long id) {
     Tag tag = new Tag();
     tag.setId(id);
     tag.setName(name);
@@ -90,9 +92,9 @@ public class TagController {
   }
 
   /** 刪除類別 */
-  @DeleteMapping("/delete")
+  @DeleteMapping("/delete/{id}")
   @ResponseBody
-  public ResponseEntity<String> deleteTag(@RequestParam("id") long id) {
+  public ResponseEntity<String> deleteTag(@PathVariable long id) {
     if (tagService.deleteTag(id)) {
       return ResponseEntity.ok("刪除成功");
     } else {

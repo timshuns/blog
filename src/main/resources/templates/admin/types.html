@@ -135,14 +135,13 @@
 		function updateForm(id) {
 			$('#formModal').modal('toggle');
 			var form = $('#form');
-			var updateUrl = '[[@{/admin/types/update}]]';
+			var updateUrl = '[[@{/admin/types/update/}]]'+id;
 			var typeName = $("#name_" + id).text();
 			var typeStatus = $("#status_" + id).text();
 			var typeStatusVal = typeStatus == '停用' ? 0 : 1;
 
 			$("#typeName").val(typeName);
 			$("#typeStatus").val(typeStatusVal);
-			$("#typeId").val(id);
 			$("#method").val("PUT");
 			$("#formTitle").text("修改類別");
 			form.prop('action', updateUrl);
@@ -152,13 +151,11 @@
 			var form = $('#form');
 			var name = $('#typeName').val();
 			var status = $('#typeStatus').val();
-			var id = $("#typeId").val();
 			var method = $("#method").val();
 
 			data = {
 				name: name,
-				status: status,
-				id: id
+				status: status
 			};
 
 			$.ajax({
@@ -186,7 +183,7 @@
 						"callback": function () {
 
 							$.ajax({
-								url: '[[@{/admin/types/delete}]]',
+								url: '[[@{/admin/types/delete/}]]'+id,
 								type: 'DELETE',
 								data: {
 									id: id
@@ -248,7 +245,6 @@
 						<i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
 					</button>
 				</div>
-				<input type="hidden" id="typeId" />
 				<input type="hidden" id="method" />
 			</form>
 		</div>

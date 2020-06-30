@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,11 +80,11 @@ public class TypeController {
   }
 
   /** 修改類別 */
-  @PutMapping("/update")
+  @PutMapping("/update/{id}")
   @ResponseBody
   public ResponseEntity<String> updateType(
       @RequestParam(required = false, name = "name") String name,
-      @RequestParam("status") int status, @RequestParam("id") long id) {
+      @RequestParam("status") int status, @PathVariable long id) {
     Type type = new Type();
     type.setId(id);
     type.setName(name);
@@ -96,9 +97,9 @@ public class TypeController {
   }
 
   /** 刪除類別 */
-  @DeleteMapping("/delete")
+  @DeleteMapping("/delete/{id}")
   @ResponseBody
-  public ResponseEntity<String> deleteType(@RequestParam("id") long id) {
+  public ResponseEntity<String> deleteType(@PathVariable long id) {
     if (typeService.deleteType(id)) {
       return ResponseEntity.ok("刪除成功");
     } else {
