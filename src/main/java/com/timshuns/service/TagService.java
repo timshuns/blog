@@ -12,7 +12,7 @@ public interface TagService {
 
   Tag getTag(Long id);
 
-  Page<Tag> getTags(long currentPage);
+  Page<Tag> getTags(long currentPage,String tagName);
 
   List<Tag> getAllTags();
 

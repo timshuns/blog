@@ -1,12 +1,12 @@
 package com.timshuns.admin.controller;
 
 import java.util.List;
-import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +29,8 @@ public class TagController {
   /** 類別起始頁面 */
   @GetMapping("/index")
   public String readTagPage(Model model,
-      @RequestParam(value = "pageNumber", required = false) String pageNumber) {
+      @RequestParam(value = "pageNumber", required = false) String pageNumber,
+      @RequestParam(value = "tagName", required = false) String tagName) {
     // 參數判斷
     Long pageNumberLong = 1L;
 
@@ -39,7 +40,7 @@ public class TagController {
       // 轉換失敗，改用預設值
     }
 
-    Page<Tag> pages = tagService.getTags(pageNumberLong);
+    Page<Tag> pages = tagService.getTags(pageNumberLong,tagName);
 
     // 查無資料
     if (pages == null) {
@@ -49,7 +50,7 @@ public class TagController {
 
     // 判斷當前頁數是否正確
     if (pageNumberLong > pages.getPages()) {
-      pages = tagService.getTags(pages.getPages());
+      pages = tagService.getTags(pages.getPages(),tagName);
     } else if (pageNumberLong <= 0) {
       pages.setCurrent(1L);
     } else {
@@ -58,6 +59,7 @@ public class TagController {
     List<Integer> pageNumbers = PageUtil.pageNumbers(pages);
     model.addAttribute("pages", pages);
     model.addAttribute("pageNumbers", pageNumbers);
+    model.addAttribute("tagName", tagName);
     return "admin/tags";
   }
 

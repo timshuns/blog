@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.mapper.TagMapper;
 import com.timshuns.pojo.Tag;
@@ -19,8 +20,7 @@ public class TagServiceImpl implements TagService {
   @Value("${page.size}")
   private long pageSize;
 
-  @Autowired
-  private TagMapper tagMapper;
+  @Autowired private TagMapper tagMapper;
 
   @Transactional
   @Override
@@ -68,9 +68,17 @@ public class TagServiceImpl implements TagService {
 
   @Transactional
   @Override
-  public Page<Tag> getTags(long currentPage) {
+  public Page<Tag> getTags(long currentPage, String tagName) {
+    QueryWrapper<Tag> queryWrapper;
     Page<Tag> page = new Page<Tag>(currentPage, pageSize);
-    tagMapper.selectPage(page, null);
+    if (tagName == null) {
+      queryWrapper = null;
+    } else {
+      queryWrapper = new QueryWrapper<Tag>();
+      queryWrapper.like("name", tagName);
+    }
+
+    tagMapper.selectPage(page, queryWrapper);
     return page;
   }
 
@@ -105,5 +113,4 @@ public class TagServiceImpl implements TagService {
   public List<Tag> getAllTags() {
     return tagMapper.selectList(null);
   }
-
 }
