@@ -13,12 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class BlogServiceImpl implements BlogService {
-  
+
   @Value("${page.size}")
   private long pageSize;
 
-  @Autowired
-  private BlogMapper blogMapper;
+  @Autowired private BlogMapper blogMapper;
 
   @Override
   public Blog getBlog(Long id) {
@@ -47,8 +46,14 @@ public class BlogServiceImpl implements BlogService {
 
   @Override
   public boolean updateBlog(Blog blog) {
-    // TODO Auto-generated method stub
-    return false;
+    // 更新失敗，返回空值
+    boolean result = false;
+    try {
+      result = (blogMapper.updateById(blog) > 0);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+    return result;
   }
 
   @Override
@@ -56,5 +61,4 @@ public class BlogServiceImpl implements BlogService {
     // TODO Auto-generated method stub
     return false;
   }
-
 }

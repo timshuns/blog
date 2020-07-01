@@ -11,7 +11,6 @@ import com.timshuns.pojo.Type;
 import com.timshuns.service.TypeService;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Service
 @Slf4j
 public class TypeServiceImpl implements TypeService {
@@ -19,12 +18,11 @@ public class TypeServiceImpl implements TypeService {
   @Value("${page.size}")
   private long pageSize;
 
-  @Autowired
-  private TypeMapper typeMapper;
+  @Autowired private TypeMapper typeMapper;
 
   @Transactional
   @Override
-  public boolean saveType(Type type) {
+  public Long saveType(Type type) {
     // 新增失敗，返回空值
     boolean result = false;
     try {
@@ -32,7 +30,8 @@ public class TypeServiceImpl implements TypeService {
     } catch (Exception e) {
       log.error(e.getMessage());
     }
-    return result;
+    System.err.println("type:"+type.getId() ); 
+    return result ? type.getId() : 0;
   }
 
   @Transactional

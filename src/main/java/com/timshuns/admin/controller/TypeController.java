@@ -24,13 +24,12 @@ import com.timshuns.util.PageUtil;
 @RequestMapping("/admin/types")
 public class TypeController {
 
-  @Autowired
-  private TypeService typeService;
+  @Autowired private TypeService typeService;
 
   /** 類別起始頁面 */
   @GetMapping("/index")
-  public String readTypePage(Model model,
-      @RequestParam(value = "pageNumber", required = false) String pageNumber) {
+  public String readTypePage(
+      Model model, @RequestParam(value = "pageNumber", required = false) String pageNumber) {
     // 參數判斷
     Long pageNumberLong = 1L;
 
@@ -65,18 +64,17 @@ public class TypeController {
   /** 新增類別 */
   @PostMapping("/save")
   @ResponseBody
-  public ResponseEntity<String> saveType(@RequestParam("name") String name,
-      @RequestParam("status") int status) {
+  public ResponseEntity<String> saveType(
+      @RequestParam("name") String name, @RequestParam("status") int status) {
     Type type = new Type();
     type.setName(name);
     type.setStatus(status);
 
-    if (typeService.saveType(type)) {
+    if (typeService.saveType(type) > 0) {
       return ResponseEntity.ok("新增成功");
     } else {
       return new ResponseEntity<String>("新增失敗", HttpStatus.BAD_REQUEST);
     }
-
   }
 
   /** 修改類別 */
@@ -84,7 +82,8 @@ public class TypeController {
   @ResponseBody
   public ResponseEntity<String> updateType(
       @RequestParam(required = false, name = "name") String name,
-      @RequestParam("status") int status, @PathVariable long id) {
+      @RequestParam("status") int status,
+      @PathVariable long id) {
     Type type = new Type();
     type.setId(id);
     type.setName(name);

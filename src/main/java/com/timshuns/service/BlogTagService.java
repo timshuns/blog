@@ -7,4 +7,6 @@ public interface BlogTagService {
   boolean saveBlogTag(BlogTag blogTag);
   
   List<Long> selectByBlogId(Long blogId);
+  
+  void deleteByBlogId(Long blogId);
 }

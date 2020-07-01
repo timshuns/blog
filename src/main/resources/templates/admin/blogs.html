@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="admin/_fragments-admin :: head"></head>
-
 <body class="no-skin">
 	<!-- 上方功能列 -->
 	<th:block th:replace="admin/_fragments-admin :: navbar"></th:block>
@@ -36,11 +34,11 @@
 												<th class="center"></th>
 												<th class="center">標題</th>
 												<th class="center">分類</th>
-												<th class="center">發佈</th>
 												<th class="center">點閱數</th>
-												<th class="center">建立日期</th>
+												<th class="center">是否發佈</th>
+												<th class="center">發佈時間</th>
 												<th>
-													<a class="btn btn-xs btn-success"th:href="@{/admin/blogs/createPage}">
+													<a class="btn btn-xs btn-success" th:href="@{/admin/blogs/createPage}">
 														<i class="ace-icon glyphicon glyphicon-plus bigger-120"></i>
 													</a>
 												</th>
@@ -50,29 +48,17 @@
 											<th:block th:if="${pages != null}">
 												<tr th:each="blog,status : ${pages.records}">
 													<td class="center" th:text="${status.count}"></td>
-													<td class="center" th:id="'name_'+${blog.id}"
-														th:text="${blog.title}" />
-													<td class="center" th:id="'name_'+${blog.id}"
-														th:text="${blog.typeId}" />
+													<td class="center" th:text="${blog.title}" />
+													<td class="center" th:text="${typesMap[blog.typeId]}" />
+													<td class="center" th:text="${blog.views}" />
 													<td class="center hidden-480">
-														<span class="label label-sm"
-															th:classappend="${blog.published} ? label-primary : label-warning"
-															th:text="${blog.published?'是':'否'}"
-															th:id="'status_'+${blog.id}"></span>
+														<span class="label label-sm" th:classappend="${blog.published} ? label-primary : label-warning" th:text="${blog.published?'是':'否'}"></span>
 													</td>
-													<td class="center" th:id="'name_'+${blog.id}"
-														th:text="${blog.views}" />
-													<td class="center" th:id="'name_'+${blog.id}"
-														th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}" />
+													<td class="center" th:text="${#dates.format(blog.publishTime, 'yyyy-MM-dd HH:mm')}" />
 													<td>
 														<div class="btn-group">
-															<button class="btn btn-xs btn-info"
-																th:onclick="'updateForm('+${blog.id}+')'">
+															<button class="btn btn-xs btn-info" th:onclick="'updateForm('+${blog.id}+')'">
 																<i class="ace-icon fa fa-pencil bigger-120"></i>
-															</button>
-															<button class="btn btn-xs btn-danger"
-																th:onclick="'deleteForm('+${blog.id}+')'">
-																<i class="ace-icon fa fa-trash-o bigger-120"></i>
 															</button>
 														</div>
 													</td>
@@ -97,15 +83,13 @@
 											</a>
 										</li>
 										<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
-											<a
-												th:href="@{/admin/types/index(pageNumber=${pages.hasPrevious()?(pages.current-1):pages.current})}">
+											<a th:href="@{/admin/types/index(pageNumber=${pages.hasPrevious()?(pages.current-1):pages.current})}">
 												<i class="ace-icon fa fa-angle-left"></i>
 											</a>
 										</li>
 										<th:block th:each="pageNumber : ${pageNumbers}">
 											<li th:classappend="${pageNumber eq pages.current} ? active : ''">
-												<a
-													th:href="@{/admin/types/index(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+												<a th:href="@{/admin/types/index(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
 											</li>
 										</th:block>
 										<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
@@ -131,12 +115,10 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		function updateForm(id){
-			location.href = '[[@{/admin/blogs/updatePage/}]]'+id;
+		function updateForm(id) {
+			location.href = '[[@{/admin/blogs/updatePage/}]]' + id;
 		}
 	</script>
 	<th:block th:replace="admin/_fragments-admin :: script"></th:block>
 </body>
-
-
 </html>

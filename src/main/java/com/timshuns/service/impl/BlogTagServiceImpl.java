@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.timshuns.mapper.BlogTagMapper;
 import com.timshuns.pojo.BlogTag;
 import com.timshuns.service.BlogTagService;
@@ -15,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BlogTagServiceImpl implements BlogTagService {
 
-  @Autowired
-  private BlogTagMapper blogTagMapper;
+  @Autowired private BlogTagMapper blogTagMapper;
 
+  @Transactional
   @Override
   public boolean saveBlogTag(BlogTag blogTag) {
     // 新增失敗，返回空值
@@ -36,12 +37,17 @@ public class BlogTagServiceImpl implements BlogTagService {
     Map<String, Object> queryMap = new HashMap<String, Object>();
     queryMap.put("blog_id", blogId);
     List<BlogTag> blogTags = blogTagMapper.selectByMap(queryMap);
-    for(BlogTag blogTag:blogTags) {
+    for (BlogTag blogTag : blogTags) {
       result.add(blogTag.getTagId());
     }
     return result;
   }
-  
-  
 
+  @Transactional
+  @Override
+  public void deleteByBlogId(Long blogId) {
+    Map<String, Object> queryMap = new HashMap<String, Object>();
+    queryMap.put("blog_id", blogId);
+    blogTagMapper.deleteByMap(queryMap);
+  }
 }

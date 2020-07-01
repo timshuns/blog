@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.pojo.Type;
 
 public interface TypeService {
-  boolean saveType(Type type);
+  Long saveType(Type type);
 
   Type getType(Long id);
 
