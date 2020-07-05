@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="admin/_fragments-admin :: head"></head>
+
 <body class="no-skin">
 	<!-- 上方功能列 -->
 	<th:block th:replace="admin/_fragments-admin :: navbar"></th:block>
@@ -22,6 +24,52 @@
 							</small>
 						</h1>
 					</div>
+					<!-- 查詢 -->
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<form class="form-horizontal" role="form" method="GET" th:action="@{/admin/blogs/index}">
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 標題
+									</label>
+									<div class="col-sm-9">
+										<input type="text" name="title" class="col-xs-10 col-sm-5"
+											th:value="${title}" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 類別
+									</label>
+									<div class="col-sm-9">
+										<select class="col-xs-10 col-sm-5" name="typeId">
+											<option value="-1" th:selected="${typeId == -1}">全部</option>
+											<th:block th:each="type : ${typesMap}">
+												<option th:value="${type.key}" th:selected="${typeId == type.key}">[[${type.value}]]</option>
+											</th:block>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 是否發佈
+									</label>
+									<div class="col-sm-9">
+										<select class="col-xs-10 col-sm-5" name="published">
+											<option value="-1" th:selected="${published == -1}">全部</option>
+											<option value="1" th:selected="${published == 1}">是</option>
+											<option value="0" th:selected="${published == 0}">否</option>
+										</select>
+									</div>
+								</div>
+								<div class="clearfix form-actions center">
+									<button class="btn btn-sm btn-info" type="submit">
+										<i class="ace-icon fa fa-check bigger-110"></i>
+										查詢
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="hr hr-24"></div>
 					<!-- 內容 -->
 					<div class="row">
 						<div class="col-xs-12">
@@ -33,12 +81,13 @@
 											<tr>
 												<th class="center"></th>
 												<th class="center">標題</th>
-												<th class="center">分類</th>
+												<th class="center">類別</th>
 												<th class="center">點閱數</th>
 												<th class="center">是否發佈</th>
 												<th class="center">發佈時間</th>
 												<th>
-													<a class="btn btn-xs btn-success" th:href="@{/admin/blogs/createPage}">
+													<a class="btn btn-xs btn-success"
+														th:href="@{/admin/blogs/createPage}">
 														<i class="ace-icon glyphicon glyphicon-plus bigger-120"></i>
 													</a>
 												</th>
@@ -52,7 +101,9 @@
 													<td class="center" th:text="${typesMap[blog.typeId]}" />
 													<td class="center" th:text="${blog.views}" />
 													<td class="center hidden-480">
-														<span class="label label-sm" th:classappend="${blog.published} ? label-primary : label-warning" th:text="${blog.published?'是':'否'}"></span>
+														<span class="label label-sm"
+															th:classappend="${blog.published} ? label-primary : label-warning"
+															th:text="${blog.published?'是':'否'}"></span>
 													</td>
 													<td class="center" th:text="${#dates.format(blog.publishTime, 'yyyy-MM-dd HH:mm')}" />
 													<td>

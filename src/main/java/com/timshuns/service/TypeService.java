@@ -9,8 +9,8 @@ public interface TypeService {
 
   Type getType(Long id);
 
-  Page<Type> getTypes(long currentPage);
-  
+  Page<Type> getTypes(long currentPage, String typeName,int typeStatus);
+
   List<Type> getAllTypes();
 
   boolean updateType(Type type);

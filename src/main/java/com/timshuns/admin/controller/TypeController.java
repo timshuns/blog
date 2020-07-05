@@ -1,6 +1,8 @@
 package com.timshuns.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,15 @@ import com.timshuns.util.PageUtil;
 @RequestMapping("/admin/types")
 public class TypeController {
 
-  @Autowired private TypeService typeService;
+  @Autowired
+  private TypeService typeService;
 
   /** 類別起始頁面 */
   @GetMapping("/index")
-  public String readTypePage(
-      Model model, @RequestParam(value = "pageNumber", required = false) String pageNumber) {
+  public String readTypePage(Model model,
+      @RequestParam(value = "pageNumber", required = false) String pageNumber,
+      @RequestParam(value = "typeName", required = false) String typeName,
+      @RequestParam(value = "typeStatus", required = false, defaultValue = "-1") int typeStatus) {
     // 參數判斷
     Long pageNumberLong = 1L;
 
@@ -39,7 +44,7 @@ public class TypeController {
       // 轉換失敗，改用預設值
     }
 
-    Page<Type> pages = typeService.getTypes(pageNumberLong);
+    Page<Type> pages = typeService.getTypes(pageNumberLong, typeName, typeStatus);
 
     // 查無資料
     if (pages == null) {
@@ -49,7 +54,7 @@ public class TypeController {
 
     // 判斷當前頁數是否正確
     if (pageNumberLong > pages.getPages()) {
-      pages = typeService.getTypes(pages.getPages());
+      pages = typeService.getTypes(pages.getPages(), typeName, typeStatus);
     } else if (pageNumberLong <= 0) {
       pages.setCurrent(1L);
     } else {
@@ -57,6 +62,8 @@ public class TypeController {
     }
     List<Integer> pageNumbers = PageUtil.pageNumbers(pages);
     model.addAttribute("pages", pages);
+    model.addAttribute("typeName", typeName);
+    model.addAttribute("typeStatus", typeStatus);
     model.addAttribute("pageNumbers", pageNumbers);
     return "admin/types";
   }
@@ -64,8 +71,8 @@ public class TypeController {
   /** 新增類別 */
   @PostMapping("/save")
   @ResponseBody
-  public ResponseEntity<String> saveType(
-      @RequestParam("name") String name, @RequestParam("status") int status) {
+  public ResponseEntity<String> saveType(@RequestParam("name") String name,
+      @RequestParam("status") int status) {
     Type type = new Type();
     type.setName(name);
     type.setStatus(status);
@@ -82,8 +89,7 @@ public class TypeController {
   @ResponseBody
   public ResponseEntity<String> updateType(
       @RequestParam(required = false, name = "name") String name,
-      @RequestParam("status") int status,
-      @PathVariable long id) {
+      @RequestParam("status") int status, @PathVariable long id) {
     Type type = new Type();
     type.setId(id);
     type.setName(name);

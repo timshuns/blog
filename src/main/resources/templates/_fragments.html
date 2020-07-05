@@ -26,16 +26,8 @@
 					<ul class="nav-menu">
 						<li><a href="index.html" th:classappend="${n==1} ? 'menu-active'">首頁</a></li>
 						<li><a href="about.html" th:classappend="${n==2} ? 'menu-active'">關於</a></li>
-						<li><a href="services.html" th:classappend="${n==3} ? 'menu-active'">Services</a></li>
-						<li><a href="portfolio.html" th:classappend="${n==4} ? 'menu-active'">Portfolio</a></li>
-						<li><a href="price.html" th:classappend="${n==5} ? 'menu-active'">Pricing</a></li>
-						<li class="menu-has-children"><a href="#" th:classappend="${n==6} ? 'menu-active'">Blog</a>
-							<ul>
-								<li><a href="blog-home.html">Blog Home</a></li>
-								<li><a href="blog-single.html">Blog Single</a></li>
-							</ul>
-						</li>
-						<li class="menu-has-children"><a href="" th:classappend="${n==7} ? 'menu-active'">Pages</a>
+						<li><a href="services.html" th:classappend="${n==3} ? 'menu-active'">技術</a></li>
+						<li class="menu-has-children"><a href="" th:classappend="${n==7} ? 'menu-active'">標籤牆</a>
 							<ul>
 								<li><a href="elements.html">Elements</a></li>
 								<li class="menu-has-children"><a href="">Level 2 </a>
@@ -46,7 +38,15 @@
 								</li>
 							</ul>
 						</li>
-						<li><a href="contact.html" th:classappend="${n==8} ? 'menu-active'">Contact</a></li>
+						<li><a href="portfolio.html" th:classappend="${n==4} ? 'menu-active'">生活</a></li>
+						<li><a href="price.html" th:classappend="${n==5} ? 'menu-active'">小作品</a></li>
+						<li class="menu-has-children"><a href="#" th:classappend="${n==6} ? 'menu-active'">留言</a>
+							<ul>
+								<li><a href="blog-home.html">Blog Home</a></li>
+								<li><a href="blog-single.html">Blog Single</a></li>
+							</ul>
+						</li>
+						<li><a href="contact.html" th:classappend="${n==8} ? 'menu-active'">聯絡我</a></li>
 					</ul>
 				</nav><!-- #nav-menu-container -->
 			</div>

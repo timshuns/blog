@@ -1,6 +1,5 @@
 package com.timshuns.admin.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -72,7 +71,10 @@ public class BlogController {
   /** 文章起始頁面 */
   @GetMapping("/index")
   public String readBlogPage(
-      Model model, @RequestParam(value = "pageNumber", required = false) String pageNumber) {
+      Model model, @RequestParam(value = "pageNumber", required = false) String pageNumber,
+      @RequestParam(value = "title", required = false) String title,
+      @RequestParam(value = "typeId", required = false ,defaultValue = "-1") int typeId,
+      @RequestParam(value = "published", required = false,defaultValue = "-1") int published) {
     // 參數判斷
     Long pageNumberLong = 1L;
 
@@ -82,7 +84,7 @@ public class BlogController {
       // 轉換失敗，改用預設值
     }
 
-    Page<Blog> pages = blogService.getBlogs(pageNumberLong);
+    Page<Blog> pages = blogService.getBlogs(pageNumberLong,title,typeId,published);
 
     // 查無資料
     if (pages == null) {
@@ -92,7 +94,7 @@ public class BlogController {
 
     // 判斷當前頁數是否正確
     if (pageNumberLong > pages.getPages()) {
-      pages = blogService.getBlogs(pages.getPages());
+      pages = blogService.getBlogs(pages.getPages(),title,typeId,published);
     } else if (pageNumberLong <= 0) {
       pages.setCurrent(1L);
     } else {
@@ -106,6 +108,9 @@ public class BlogController {
     }
     model.addAttribute("typesMap", typesMap);
     List<Integer> pageNumbers = PageUtil.pageNumbers(pages);
+    model.addAttribute("title", title);
+    model.addAttribute("typeId", typeId);
+    model.addAttribute("published", published);
     model.addAttribute("pages", pages);
     model.addAttribute("pageNumbers", pageNumbers);
     return "admin/blogs";

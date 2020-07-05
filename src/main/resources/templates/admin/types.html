@@ -24,6 +24,40 @@
 							</small>
 						</h1>
 					</div>
+					<!-- 查詢 -->
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<form class="form-horizontal" role="form" method="GET" th:action="@{/admin/types/index}">
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 類別名稱
+									</label>
+									<div class="col-sm-9">
+										<input type="text" name="typeName" class="col-xs-10 col-sm-5"
+											th:value="${typeName}" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 狀態
+									</label>
+									<div class="col-sm-9">
+										<select class="col-xs-10 col-sm-5" name="typeStatus">
+											<option value="-1" th:selected="${typeStatus == -1}">全部</option>
+											<option value="0" th:selected="${typeStatus == 0}">停用</option>
+											<option value="1" th:selected="${typeStatus == 1}">啟用</option>
+										</select>
+									</div>
+								</div>
+								<div class="clearfix form-actions center">
+									<button class="btn btn-sm btn-info" type="submit">
+										<i class="ace-icon fa fa-check bigger-110"></i>
+										查詢
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="hr hr-24"></div>
 					<!-- 內容 -->
 					<div class="row">
 						<div class="col-xs-12">
@@ -135,7 +169,7 @@
 		function updateForm(id) {
 			$('#formModal').modal('toggle');
 			var form = $('#form');
-			var updateUrl = '[[@{/admin/types/update/}]]'+id;
+			var updateUrl = '[[@{/admin/types/update/}]]' + id;
 			var typeName = $("#name_" + id).text();
 			var typeStatus = $("#status_" + id).text();
 			var typeStatusVal = typeStatus == '停用' ? 0 : 1;
@@ -183,7 +217,7 @@
 						"callback": function () {
 
 							$.ajax({
-								url: '[[@{/admin/types/delete/}]]'+id,
+								url: '[[@{/admin/types/delete/}]]' + id,
 								type: 'DELETE',
 								data: {
 									id: id

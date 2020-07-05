@@ -2,10 +2,12 @@ package com.timshuns.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.mapper.TagMapper;
@@ -20,7 +22,8 @@ public class TagServiceImpl implements TagService {
   @Value("${page.size}")
   private long pageSize;
 
-  @Autowired private TagMapper tagMapper;
+  @Autowired
+  private TagMapper tagMapper;
 
   @Transactional
   @Override
@@ -69,15 +72,11 @@ public class TagServiceImpl implements TagService {
   @Transactional
   @Override
   public Page<Tag> getTags(long currentPage, String tagName) {
-    QueryWrapper<Tag> queryWrapper;
+    QueryWrapper<Tag> queryWrapper = new QueryWrapper<Tag>();
     Page<Tag> page = new Page<Tag>(currentPage, pageSize);
-    if (tagName == null) {
-      queryWrapper = null;
-    } else {
-      queryWrapper = new QueryWrapper<Tag>();
+    if (!StringUtils.isBlank(tagName)) {
       queryWrapper.like("name", tagName);
     }
-
     tagMapper.selectPage(page, queryWrapper);
     return page;
   }

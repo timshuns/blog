@@ -1,12 +1,15 @@
 package com.timshuns.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.mapper.BlogMapper;
 import com.timshuns.pojo.Blog;
+import com.timshuns.pojo.Type;
 import com.timshuns.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +20,8 @@ public class BlogServiceImpl implements BlogService {
   @Value("${page.size}")
   private long pageSize;
 
-  @Autowired private BlogMapper blogMapper;
+  @Autowired
+  private BlogMapper blogMapper;
 
   @Override
   public Blog getBlog(Long id) {
@@ -25,9 +29,21 @@ public class BlogServiceImpl implements BlogService {
   }
 
   @Override
-  public Page<Blog> getBlogs(long currentPage) {
+  public Page<Blog> getBlogs(long currentPage, String title, int typeId, int published) {
+    QueryWrapper<Blog> queryWrapper = new QueryWrapper<Blog>();
     Page<Blog> page = new Page<Blog>(currentPage, pageSize);
-    blogMapper.selectPage(page, null);
+
+    if (!StringUtils.isBlank(title)) {
+      queryWrapper.like("title", title);
+    }
+    if (typeId >= 0) {
+      queryWrapper.eq("type_id", typeId);
+    }
+    if (published >= 0) {
+      queryWrapper.eq("published", published);
+    }
+
+    blogMapper.selectPage(page, queryWrapper);
     return page;
   }
 

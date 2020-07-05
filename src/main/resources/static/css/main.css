@@ -2146,8 +2146,8 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
   display: inline-block;
   color: #222;
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: 1000;
+  font-size: 16px;
   text-transform: uppercase;
   outline: none;
 }

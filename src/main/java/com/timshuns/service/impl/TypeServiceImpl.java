@@ -1,10 +1,14 @@
 package com.timshuns.service.impl;
 
+import java.security.KeyStore.Entry;
 import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.mapper.TypeMapper;
 import com.timshuns.pojo.Type;
@@ -18,7 +22,8 @@ public class TypeServiceImpl implements TypeService {
   @Value("${page.size}")
   private long pageSize;
 
-  @Autowired private TypeMapper typeMapper;
+  @Autowired
+  private TypeMapper typeMapper;
 
   @Transactional
   @Override
@@ -30,7 +35,7 @@ public class TypeServiceImpl implements TypeService {
     } catch (Exception e) {
       log.error(e.getMessage());
     }
-    System.err.println("type:"+type.getId() ); 
+    System.err.println("type:" + type.getId());
     return result ? type.getId() : 0;
   }
 
@@ -42,10 +47,18 @@ public class TypeServiceImpl implements TypeService {
 
   @Transactional
   @Override
-  public Page<Type> getTypes(long currentPage) {
+  public Page<Type> getTypes(long currentPage, String typeName, int typeStatus) {
+    QueryWrapper<Type> queryWrapper = new QueryWrapper<Type>();
     Page<Type> page = new Page<Type>(currentPage, pageSize);
-    // page.setSize(1);
-    typeMapper.selectPage(page, null);
+
+    if(!StringUtils.isBlank(typeName)) {
+      queryWrapper.like("name", typeName);
+    }
+    if(typeStatus >=0) {
+      queryWrapper.eq("status", typeStatus);
+    }
+
+    typeMapper.selectPage(page, queryWrapper);
     return page;
   }
 
