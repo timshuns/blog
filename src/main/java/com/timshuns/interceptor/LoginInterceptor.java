@@ -11,7 +11,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
       throws Exception {
     // 設置攔截器，判斷是否為登入狀態
     if (request.getSession().getAttribute("user") == null) {
-      System.err.println("登入判斷");
       response.sendRedirect("/blog/index");
       return false;
     }

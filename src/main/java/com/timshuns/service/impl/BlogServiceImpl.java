@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.mapper.BlogMapper;
 import com.timshuns.pojo.Blog;
-import com.timshuns.pojo.Type;
 import com.timshuns.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
 
