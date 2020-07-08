@@ -12,6 +12,8 @@ public interface TypeService {
   Page<Type> getTypes(long currentPage, String typeName,int typeStatus);
 
   List<Type> getAllTypes();
+  
+  List<Type> getTypesWithEnable();
 
   boolean updateType(Type type);
 

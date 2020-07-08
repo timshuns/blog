@@ -112,4 +112,10 @@ public class TagServiceImpl implements TagService {
   public List<Tag> getAllTags() {
     return tagMapper.selectList(null);
   }
+  
+  @Transactional
+  @Override
+  public List<Tag> getTagsByBlogId(long blogId){
+    return tagMapper.selectByBlogId(blogId);
+  }
 }

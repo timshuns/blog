@@ -15,6 +15,8 @@ public interface TagService {
   Page<Tag> getTags(long currentPage,String tagName);
 
   List<Tag> getAllTags();
+  
+  List<Tag> getTagsByBlogId(long blogId);
 
   boolean updateTag(Tag tag);
 

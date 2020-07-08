@@ -1,6 +1,7 @@
 package com.timshuns.service.impl;
 
 import java.security.KeyStore.Entry;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
@@ -91,5 +92,12 @@ public class TypeServiceImpl implements TypeService {
   @Override
   public List<Type> getAllTypes() {
     return typeMapper.selectList(null);
+  }
+  
+  @Override
+  public List<Type> getTypesWithEnable(){
+    Map<String, Object> columnMap = new HashMap<String, Object>();
+    columnMap.put("status", 1);
+    return typeMapper.selectByMap(columnMap);
   }
 }

@@ -7,7 +7,7 @@ public interface BlogService {
 
   Blog getBlog(Long id);
 
-  Page<Blog> getBlogs(long currentPage,String title,int typeId,int published);
+  Page<Blog> getBlogs(long currentPage,String title,long typeId,int published);
 
   boolean saveBlog(Blog blog);
 

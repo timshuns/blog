@@ -28,7 +28,7 @@ public class BlogServiceImpl implements BlogService {
   }
 
   @Override
-  public Page<Blog> getBlogs(long currentPage, String title, int typeId, int published) {
+  public Page<Blog> getBlogs(long currentPage, String title, long typeId, int published) {
     QueryWrapper<Blog> queryWrapper = new QueryWrapper<Blog>();
     Page<Blog> page = new Page<Blog>(currentPage, pageSize);
 
