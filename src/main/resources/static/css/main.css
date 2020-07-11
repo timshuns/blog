@@ -41,7 +41,7 @@ $title-color	: #222222;
 $text-color		: #777777;
 
 $white			: #fff;
-$offwhite		: #f9f9ff;
+$offwhite		: #f1f1ff;
 $black			: #222;
 
 */
@@ -93,9 +93,9 @@ $black			: #222;
 
 body {
   color: #777777;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  font-weight: 300;
+  font-family: "Poppins","Amstelvar Alpha", sans-serif ;
+  font-size: 18px;
+  font-weight: 500;
   line-height: 1.625em;
   position: relative;
 }
@@ -155,12 +155,12 @@ a, a:focus, a:hover {
 }
 
 .gray-bg {
-  background: #f9f9ff;
+  background: #f1f1ff;
 }
 
 h1, h2, h3,
 h4, h5, h6 {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins","Amstelvar Alpha", sans-serif ;
   color: #222222;
   line-height: 1.2em !important;
   margin-bottom: 0;
@@ -172,7 +172,7 @@ h4, h5, h6 {
 .h4, .h5, .h6 {
   margin-bottom: 0;
   margin-top: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins","Amstelvar Alpha", sans-serif;
   font-weight: 600;
   color: #222222;
 }
@@ -818,7 +818,7 @@ td, th {
 /* =================================== */
 /*---------- Start Elements Page -------------*/
 .whole-wrap {
-  background-color: #f9f9ff;
+  background-color: #f1f1ff;
 }
 
 .generic-banner {
@@ -890,7 +890,7 @@ td, th {
 
 /*---------- End Elements Page -------------*/
 .sample-text-area {
-  background: #f9f9ff;
+  background: #f1f1ff;
   padding: 100px 0 70px 0;
 }
 
@@ -956,7 +956,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button-area {
-  background: #f9f9ff;
+  background: #f1f1ff;
 }
 
 .button-area .border-top-generic {
@@ -1037,23 +1037,23 @@ h1, h2, h3, h4, h5, h6 {
 
 .genric-btn.default {
   color: #222222;
-  background: #f9f9ff;
+  background: #f1f1ff;
   border: 1px solid transparent;
 }
 
 .genric-btn.default:hover {
-  border: 1px solid #f9f9ff;
+  border: 1px solid #f1f1ff;
   background: #fff;
 }
 
 .genric-btn.default-border {
-  border: 1px solid #f9f9ff;
+  border: 1px solid #f1f1ff;
   background: #fff;
 }
 
 .genric-btn.default-border:hover {
   color: #222222;
-  background: #f9f9ff;
+  background: #f1f1ff;
   border: 1px solid transparent;
 }
 
@@ -1179,33 +1179,33 @@ h1, h2, h3, h4, h5, h6 {
 
 .genric-btn.link {
   color: #222222;
-  background: #f9f9ff;
+  background: #f1f1ff;
   text-decoration: underline;
   border: 1px solid transparent;
 }
 
 .genric-btn.link:hover {
   color: #222222;
-  border: 1px solid #f9f9ff;
+  border: 1px solid #f1f1ff;
   background: #fff;
 }
 
 .genric-btn.link-border {
   color: #222222;
-  border: 1px solid #f9f9ff;
+  border: 1px solid #f1f1ff;
   background: #fff;
   text-decoration: underline;
 }
 
 .genric-btn.link-border:hover {
   color: #222222;
-  background: #f9f9ff;
+  background: #f1f1ff;
   border: 1px solid transparent;
 }
 
 .genric-btn.disable {
   color: #222222, 0.3;
-  background: #f9f9ff;
+  background: #f1f1ff;
   border: 1px solid transparent;
   cursor: not-allowed;
 }
@@ -2439,7 +2439,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /*-------- Start Banner Area ------------*/
 .banner-area {
-  background: #f9f9ff;
+  background: #f1f1ff;
 }
 
 .banner-area .fullscreen {
@@ -2725,7 +2725,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*--------- End Portfolio Area -------------*/
 /*--------- start testimonial area  -------------*/
 .testimonial-area {
-  background-color: #f9f9ff;
+  background-color: #f1f1ff;
 }
 
 .testimonial-area .owl-controls {
@@ -2803,7 +2803,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
   text-align: center;
-  background-color: #f9f9ff;
+  background-color: #f1f1ff;
   padding: 40px 20px;
 }
 
@@ -2901,7 +2901,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*--------- end price  Area -------------*/
 /*-------- start recent-blog Area -------------*/
 .recent-blog-area {
-  background: #f9f9ff;
+  background: #f1f1ff;
 }
 
 .recent-blog-area h1 {
@@ -3068,7 +3068,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /*  About Page Styles
 /* =================================== */
 .aboutpage-feedback-area {
-  background: #f9f9ff !important;
+  background: #f1f1ff !important;
 }
 
 /*-------- Start Skillbar Style  -------------*/
@@ -3091,7 +3091,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /*--------  End Skillbar Style  -------------*/
 .timeline ul li {
-  background: #f9f9ff;
+  background: #f1f1ff;
   position: relative;
   margin: 0 auto;
   width: 2px;
@@ -3379,7 +3379,7 @@ dl.accordion.time-line:before {
 }
 
 .blog-page {
-  background: #f9f9ff;
+  background: #f1f1ff;
 }
 
 .blog-header-content h1 {
@@ -3399,7 +3399,7 @@ dl.accordion.time-line:before {
 }
 
 .top-category-widget-area {
-  background-color: #f9f9ff;
+  background-color: #f1f1ff;
 }
 
 .top-category-widget-area .single-cat-widget {
@@ -3458,7 +3458,7 @@ dl.accordion.time-line:before {
 }
 
 .post-content-area {
-  background-color: #f9f9ff;
+  background-color: #f1f1ff;
 }
 
 .post-content-area .single-post {
@@ -3984,7 +3984,7 @@ dl.accordion.time-line:before {
 
 .single-post-area .navigation-area .nav-left .thumb {
   margin-right: 20px;
-  background: #000;
+  /*background: #000;*/
 }
 
 .single-post-area .navigation-area .nav-left .thumb img {
@@ -3996,7 +3996,7 @@ dl.accordion.time-line:before {
 
 .single-post-area .navigation-area .nav-left .lnr {
   margin-left: 20px;
-  opacity: 0;
+  opacity: 0.7;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -4023,7 +4023,7 @@ dl.accordion.time-line:before {
 
 .single-post-area .navigation-area .nav-right .thumb {
   margin-left: 20px;
-  background: #000;
+ /* background: #000;*/
 }
 
 .single-post-area .navigation-area .nav-right .thumb img {
@@ -4035,7 +4035,7 @@ dl.accordion.time-line:before {
 
 .single-post-area .navigation-area .nav-right .lnr {
   margin-right: 20px;
-  opacity: 0;
+  opacity: 0.7;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -4223,7 +4223,7 @@ dl.accordion.time-line:before {
 /*  Contact Page Styles
 /* =================================== */
 .contact-page-area {
-  background: #f9f9ff;
+  background: #f1f1ff;
 }
 
 .contact-page-area .map-wrap {
@@ -4325,7 +4325,7 @@ dl.accordion.time-line:before {
   border: none;
   width: 80% !important;
   font-weight: 300;
-  background: #f9f9ff;
+  background: #f1f1ff;
   padding-left: 20px;
   border-radius: 0;
   font-size: 14px;

@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" th:href="@{/assets/css/fonts.googleapis.com.css}" />
 <link rel="stylesheet" href="assets/css/ace-skins.min.css" th:href="@{/assets/css/ace-skins.min.css}" />
 <link rel="stylesheet" href="assets/css/ace-rtl.min.css" th:href="@{/assets/css/ace-rtl.min.css}" />
-<link rel="stylesheet" href="assets/css/select2.min.css" th:href="@{/assets/css/select2.min.css}"/>
+<link rel="stylesheet" href="assets/css/select2.min.css" th:href="@{/assets/css/select2.min.css}" />
 <link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" th:href="@{/assets/css/ace.min.css}" />
-<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" th:href="@{/assets/css/bootstrap-datetimepicker.min.css}"/>
+<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" th:href="@{/assets/css/bootstrap-datetimepicker.min.css}" />
 </head>
 <body class="no-skin">
 	<th:block th:fragment="script">
@@ -351,7 +351,7 @@
 			<!-- /.sidebar-shortcuts -->
 			<ul class="nav nav-list">
 				<li class="active">
-					<a th:href="@{/admin/index}" >
+					<a th:href="@{/admin/index}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text"> 首頁 </span>
 					</a>
@@ -378,11 +378,11 @@
 					</a>
 					<b class="arrow"></b>
 				</li>
-			<!-- /.nav-list -->
-			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-				<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left"
-					data-icon2="ace-icon fa fa-angle-double-right"></i>
-			</div>
+				<!-- /.nav-list -->
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left"
+						data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
 		</div>
 	</th:block>
 	<!-- 麵包屑 -->
@@ -396,6 +396,39 @@
 				<li class="active">Dashboard</li>
 			</ul>
 			<!-- /.breadcrumb -->
+		</div>
+	</th:block>
+	<!-- 分頁 -->
+	<th:block th:fragment="pagination (pages,url)">
+		<div class=" text-center" th:if="${pages != null}">
+			<ul class="pagination">
+				<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
+					<a th:href="@{${url}(pageNumber=1)}">
+						<i class="ace-icon fa fa-angle-double-left"></i>
+					</a>
+				</li>
+				<li th:classappend="${pages.hasPrevious()} ? '' : 'disabled'">
+					<a th:href="@{${url}(pageNumber=${pages.hasPrevious()?(pages.current-1):pages.current})}">
+						<i class="ace-icon fa fa-angle-left"></i>
+					</a>
+				</li>
+				<th:block th:each="pageNumber : ${pageNumbers}">
+					<li th:classappend="${pageNumber eq pages.current} ? active : ''">
+						<a th:href="@{${url}(pageNumber=${pageNumber})}">[[${pageNumber}]]</a>
+					</li>
+				</th:block>
+				<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
+					<a th:href="@{${url}(pageNumber=${pages.hasNext()
+			?(pages.current+1):pages.current})}">
+						<i class="ace-icon fa fa-angle-right"></i>
+					</a>
+				</li>
+				<li th:classappend="${pages.hasNext()} ? '' : 'disabled'">
+					<a th:href="@{${url}(pageNumber=${pages.pages})}">
+						<i class="ace-icon fa fa-angle-double-right"></i>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</th:block>
 </body>

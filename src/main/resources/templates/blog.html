@@ -45,13 +45,12 @@
 							</div>
 						</div>
 						<div class="col-lg-9 col-md-9 ">
-							<div class="feature-img">
-								<img class="img-fluid" src="img/blog/default.jpg" alt="">
-							</div>
-							<a class="posts-title" href="blog-single.html">
+							<a class="posts-title" th:href="@{'/blog/'+${blog.id}}">
 								<h3>[[${blog.title}]]</h3>
 							</a>
-							<p class="excert">[[${blog.content}]]</p>
+							<div class="feature-img pb-20">
+								<img class="img-fluid" th:src="@{/img/blog/default.jpg}" alt="[[${blog.title}]]">
+							</div>
 							<a th:href="@{'/blog/'+${blog.id}}" class="genric-btn success">View More</a>
 						</div>
 					</div>
