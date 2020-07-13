@@ -1,143 +1,73 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head(title)">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title th:replace="${title}">Title</title>
-<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-<link href="http://fonts.googleapis.com/earlyaccess/amstelvaralpha.css" rel="stylesheet">
-<link rel="stylesheet" href="css/linearicons.css" th:href="@{/css/linearicons.css}">
-<link rel="stylesheet" href="css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
-<link rel="stylesheet" href="css/bootstrap.css" th:href="@{/css/bootstrap.css}">
-<link rel="stylesheet" href="css/magnific-popup.css" th:href="@{/css/magnific-popup.css}">
-<link rel="stylesheet" href="css/nice-select.css" th:href="@{/css/nice-select.css}">
-<link rel="stylesheet" href="css/animate.min.css" th:href="@{/css/animate.min.css}">
-<link rel="stylesheet" href="css/owl.carousel.css" th:href="@{/css/owl.carousel.css}">
-<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}">
-<!-- 文章內容使用 -->
-<link rel="stylesheet" th:href="@{/editor-md/css/editormd.css}">
-<link rel="stylesheet" th:href="@{/editor-md/css/editormd.preview.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/nprogress.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
 </head>
-<body>
-	<header id="header" th:fragment="header(index)">
-		<div class="container main-menu">
-			<div class="row align-items-center justify-content-between d-flex">
-				<div id="logo">
-					<a th:href="@{/admin/loginPage}">
-						<img src="img/logo.png" alt="" title="" />
-					</a>
+<body class="user-select">
+	<th:block th:fragment="top-header(n)">
+		<header class="header">
+			<nav class="navbar navbar-default" id="navbar">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar" aria-expanded="false">
+							<span class="sr-only"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<h1 class="logo hvr-bounce-in">
+							<a th:href="@{/admin/loginPage}">
+								<img src="images/logo.png" alt="">
+							</a>
+						</h1>
+					</div>
+					<div class="collapse navbar-collapse" id="header-navbar">
+						<ul class="nav navbar-nav navbar-right">
+							<li th:classappend="${n==1} ? 'active'">
+								<a data-cont="首頁" th:href="@{/index.html}">首頁[[${index}]]</a>
+							</li>
+							<li th:classappend="${n==2} ? 'active'">
+								<a th:href="@{/about.html}">關於</a>
+							</li>
+							<li th:classappend="${n==3} ? 'active'">
+								<a th:href="@{/blog.html}">文章</a>
+							</li>
+							<li th:classappend="${n==4} ? 'active'">
+								<a th:href="@{/tags.html}">標籤牆</a>
+							</li>
+						</ul>
+					</div>
 				</div>
-				<nav id="nav-menu-container">
-					<ul class="nav-menu">
-						<li>
-							<a th:href="@{/index.html}" th:classappend="${n==1} ? 'menu-active'">首頁</a>
-						</li>
-						<li>
-							<a th:href="@{/about.html}" th:classappend="${n==2} ? 'menu-active'">關於</a>
-						</li>
-						<li>
-							<a th:href="@{/blog.html}" th:classappend="${n==3} ? 'menu-active'">文章</a>
-						</li>
-						<li>
-							<a th:href="@{/tags.html}" th:classappend="${n==4} ? 'menu-active'">標籤牆</a>
-						</li>
-					</ul>
-				</nav>
-				<!-- #nav-menu-container -->
-			</div>
-		</div>
-	</header>
-	<footer class="footer-area section-gap" th:fragment="footer">
+			</nav>
+		</header>
+	</th:block>
+	
+	<footer class="footer" th:fragment="footer">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h4>關於</h4>
-						<p>期望這個網站能對你的工作有所幫助，若覺得不錯，可以幫忙推廣。</p>
-						<p class="footer-text">
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy; 2020 All rights reserved | This template is made with
-							<i class="fa fa-heart-o" aria-hidden="true"></i>
-							by
-							<a href="https://colorlib.com" target="_blank">Colorlib</a>
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						</p>
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-6 social-widget">
-					<div class="single-footer-widget">
-						<h4>Follow Me</h4>
-						<div class="footer-social d-flex align-items-center">
-							<a href="#" target="_blank">
-								<i class="fa fa-facebook"></i>
-							</a>
-							<a href="https://www.linkedin.com/in/timshuns/" target="_blank">
-								<i class="fa fa-linkedin"></i>
-							</a>
-							<a href="mailto:timshuns@gmail.com?subject=Java筆記">
-								<i class="fa fa-envelope"></i>
-							</a>
-						</div>
-						<p>Email：timshuns@gmail.com</p>
-					</div>
-				</div>
-			</div>
+			<p>
+				footer
+			</p>
 		</div>
-		<button type="button" id="ToTop" class="toTop-arrow"></button>
+		<div id="gotop">
+			<a class="gotop"></a>
+		</div>
 	</footer>
-	<th:block th:fragment="script>">
-		<script src="js/vendor/jquery-2.2.4.min.js" th:src="@{/js/vendor/jquery-2.2.4.min.js}"></script>
-		<script src="js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
-		<script src="js/vendor/bootstrap.min.js" th:src="@{/js/vendor/bootstrap.min.js}"></script>
-		<script src="js/easing.min.js" th:src="@{/js/easing.min.js}"></script>
-		<script src="js/hoverIntent.js" th:src="@{/js/hoverIntent.js}"></script>
-		<script src="js/superfish.min.js" th:src="@{/js/superfish.min.js}"></script>
-		<script src="js/jquery.ajaxchimp.min.js" th:src="@{/js/jquery.ajaxchimp.min.js}"></script>
-		<script src="js/jquery.magnific-popup.min.js" th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-		<script src="js/jquery.tabs.min.js" th:src="@{/js/jquery.tabs.min.js}"></script>
-		<script src="js/jquery.nice-select.min.js" th:src="@{/js/jquery.nice-select.min.js}"></script>
-		<script src="js/isotope.pkgd.min.js" th:src="@{/js/isotope.pkgd.min.js}"></script>
-		<script src="js/waypoints.min.js" th:src="@{/js/waypoints.min.js}"></script>
-		<script src="js/jquery.counterup.min.js" th:src="@{/js/jquery.counterup.min.js}"></script>
-		<script src="js/simple-skillbar.js" th:src="@{/js/simple-skillbar.js}"></script>
-		<script src="js/owl.carousel.min.js" th:src="@{/js/owl.carousel.min.js}"></script>
-		<script src="js/mail-script.js" th:src="@{/js/mail-script.js}"></script>
-		<script src="js/main.js" th:src="@{/js/main.js}"></script>
-		
-		<script src="editor-md/editormd.js" th:src="@{/editor-md/editormd.js}"></script>
-		<script src="editor-md/lib/marked.min.js" th:src="@{/editor-md/lib/marked.min.js}"></script>
-		<script src="editor-md/lib/prettify.min.js" th:src="@{/editor-md/lib/prettify.min.js}"></script>
-		<script src="editor-md/lib/underscore.min.js" th:src="@{/editor-md/lib/underscore.min.js}"></script>
-		<script src="editor-md/lib/raphael.min.js" th:src="@{/editor-md/lib/raphael.min.js}"></script>
-
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-		<script>
-			$(function() {
-				$('#ToTop').click(function() {
-					$('html,body').animate({
-						scrollTop : 0
-					}, 500);
-				});
-				$(window).scroll(function() {
-					if ($(this).scrollTop() > 300) {
-						$('#ToTop').fadeIn(250);
-					} else {
-						$('#ToTop').stop().fadeOut(250);
-					}
-				}).scroll();
-
-				var testEditor;
-				$(function() {
-					testEditor = editormd.markdownToHTML("my-content", {
-						htmlDecode : "style,script,iframe",
-						taskList : true,
-						tex : true, // 默认不解析
-						flowChart : true, // 默认不解析
-						sequenceDiagram : true, // 默认不解析
-						codeFold : true,
-					});
-				});
-			});
-		</script>
+	
+	<th:block th:fragment="script">
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/nprogress.js"></script>
+		<script src="js/jquery.lazyload.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.ias.js"></script>
+		<script src="js/scripts.js"></script>
 	</th:block>
 </body>
 </html>

@@ -1,50 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="_fragments :: head(~{::title})">
-<title>About page</title>
+<title>Tags page</title>
 </head>
-<body>
-	<header id="header" th:replace="_fragments :: header(2)"></header>
+<body class="user-select">
+	<header id="header" th:replace="_fragments :: top-header(4)"></header>
 	<!-- #header -->
-	<section class="about-banner">
-		<div class="container">
-			<div class="row d-flex align-items-center justify-content-center">
-				<div class="about-content col-lg-12">
-					<h1 class="text-white">標籤牆</h1>
-					<p class="text-white link-nav">
-						<a href="index.html">Home </a>
-						<span class="lnr lnr-arrow-right"></span>
-						<a href="tags.html"> Tags </a>
-					</p>
-				</div>
-			</div>
+	<section class="container container-page">
+		<div class="page-header article-header panel panel-info">
+			<h1 class="article-title">標籤牆</h1>
+		</div>
+		<div class="content">
+			<ul class="plinks ptags">
+				<th:block th:each="tag : ${tags}">
+					<li>
+						<a href="" target="_blank"> [[${tag.name}]] </a>
+					</li>
+				</th:block>
+			</ul>
 		</div>
 	</section>
-	<section class="faq-area pt-30">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-12">
-					<dl class="accordion typography text-center">
-						<dd>
-							<h3>期待有天能將這面牆填滿</h3>
-						</dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-	</section>
-	<section class="home-about-area pb-30">
-		<div class="container">
-			<div class="row align-items-center justify-content-between">
-				<div class="col-lg-12 button-group-area">
-					<th:block th:each="tag : ${tags}">
-						<span class="genric-btn info radius medium">[[${tag.name}]]</span>
-					</th:block>
-				</div>
-			</div>
-		</div>
-	</section>
-	<footer th:replace="_fragments :: footer" class="footer-area section-gap"></footer>
+	<footer th:replace="_fragments :: footer"></footer>
 	<!-- End footer Area -->
 	<th:block th:replace="_fragments :: script"></th:block>
 </body>

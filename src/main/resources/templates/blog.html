@@ -1,22 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="_fragments :: head(~{::title})">
-<title>About page</title>
+<title>Empty page</title>
 </head>
-<body>
-	<header id="header" th:replace="_fragments :: header(3)"></header>
+<body class="user-select single">
 	<!-- #header -->
-	<div class="whole-wrap pt-80">
-		<div class="container">
-			<div class="section-top-border">
-				<div class="row">
-					<div class="col-lg-12 col-md-12 text-center">
-						<h3 class="mb-30">[[${type.name}]]</h3>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<th:block th:include="_fragments :: top-header(3)"></th:block>
+	<!-- content -->
 	<section class="post-content-area">
 		<div class="container">
 			<div class="row">
@@ -73,7 +63,8 @@
 			</div>
 		</div>
 	</section>
-	<footer th:replace="_fragments :: footer" class="footer-area section-gap"></footer>
+	<!-- Start footer Area -->
+	<footer th:replace="_fragments :: footer"></footer>
 	<!-- End footer Area -->
 	<th:block th:replace="_fragments :: script"></th:block>
 </body>

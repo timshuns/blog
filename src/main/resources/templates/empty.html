@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+<title>Empty page</title>
+</head>
+<body class="user-select single">
+	<!-- #header -->
+	<th:block th:include="_fragments :: top-header(99)"></th:block>
+	<!-- content -->
+	
+	<!-- Start footer Area -->
+	<footer th:replace="_fragments :: footer"></footer>
+	<!-- End footer Area -->
+	<th:block th:replace="_fragments :: script"></th:block>
+</body>
+</html>
