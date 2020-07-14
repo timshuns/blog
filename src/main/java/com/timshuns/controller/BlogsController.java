@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.pojo.Blog;
@@ -20,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class TypesController {
+public class BlogsController {
 
   @Autowired private TypeService typeService;
 
@@ -36,7 +37,11 @@ public class TypesController {
     log.info("blog");
 
     List<Type> types = typeService.getTypesWithEnable();
-    Type type = null;
+
+    Map<Long, String> typesMap = new HashMap<Long, String>();
+    for (Type type : types) {
+      typesMap.put(type.getId(), type.getName());
+    }
 
     // 參數判斷
     Long currentPage = 1L;
@@ -47,18 +52,6 @@ public class TypesController {
       // 轉換失敗，改用預設值
     }
 
-    if (typeId == 0) {
-      typeId = types.get(0).getId();
-      type = types.get(0);
-    } else {
-      // 判斷typeId 是否啟用
-      type = typeService.getType(typeId);
-      if (type.getStatus() != 1) {
-        typeId = types.get(0).getId();
-        type = types.get(0);
-      }
-    }
-
     Page<Blog> blogs = blogService.getBlogs(currentPage, "", typeId, 1);
 
     // 查詢標籤
@@ -67,8 +60,8 @@ public class TypesController {
       blogTags.put(String.valueOf(blog.getId()), tagService.getTagsByBlogId(blog.getId()));
     }
 
+    model.addAttribute("typesMap", typesMap);
     model.addAttribute("blogTags", blogTags);
-    model.addAttribute("type", type);
     model.addAttribute("types", types);
     model.addAttribute("blogs", blogs);
     return "blog";
@@ -78,9 +71,23 @@ public class TypesController {
   public String detail(Model model, @PathVariable long id) {
     log.info("blog-detail");
 
-   Blog blog = blogService.getBlog(id);
+    Blog blog = blogService.getBlog(id);
+    List<Tag> tags = tagService.getTagsByBlogId(id);
 
     model.addAttribute("blog", blog);
+    model.addAttribute("tags", tags);
+    return "blog-detail";
+  }
+  
+  @PostMapping({"/comment/{id}"})
+  public String comment(Model model, @PathVariable long id) {
+    log.info("blog-detail");
+
+    Blog blog = blogService.getBlog(id);
+    List<Tag> tags = tagService.getTagsByBlogId(id);
+
+    model.addAttribute("blog", blog);
+    model.addAttribute("tags", tags);
     return "blog-detail";
   }
 }

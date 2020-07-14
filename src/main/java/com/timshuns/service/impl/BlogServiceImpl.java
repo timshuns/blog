@@ -35,12 +35,13 @@ public class BlogServiceImpl implements BlogService {
     if (!StringUtils.isBlank(title)) {
       queryWrapper.like("title", title);
     }
-    if (typeId >= 0) {
+    if (typeId > 0) {
       queryWrapper.eq("type_id", typeId);
     }
     if (published >= 0) {
       queryWrapper.eq("published", published);
     }
+    queryWrapper.orderByDesc("publish_time");
 
     blogMapper.selectPage(page, queryWrapper);
     return page;

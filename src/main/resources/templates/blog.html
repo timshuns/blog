@@ -1,71 +1,202 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" class="no-js" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="_fragments :: head(~{::title})">
-<title>Empty page</title>
+<title>Index page</title>
 </head>
-<body class="user-select single">
-	<!-- #header -->
+<body>
+	<!-- Header -->
 	<th:block th:include="_fragments :: top-header(3)"></th:block>
-	<!-- content -->
-	<section class="post-content-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-9 posts-list">
-					<div class="single-post row" th:each="blog : ${blogs.getRecords()}">
-						<div class="col-lg-3  col-md-3 meta-details user-name">
-							<span class="lnr lnr-tag"></span>
-							<ul class="tags button-group-area">
-								<li th:each="tag : ${blogTags['1']}">
-									<a href="#" class="genric-btn info circle arrow small">[[${tag.name}]]</a>
-								</li>
-							</ul>
-							<div class="user-details row">
-								<p class="date col-lg-12 col-md-12 col-6">
-									<a href="#">[[${#dates.format(blog.publishTime, 'yyyy-MM-dd')}]]</a>
-									<span class="lnr lnr-calendar-full"></span>
-								</p>
-								<p class="view col-lg-12 col-md-12 col-6">
-									<a href="#">[[${blog.views}]] Views</a>
-									<span class="lnr lnr-eye"></span>
-								</p>
-								<p class="comments col-lg-12 col-md-12 col-6">
-									<a href="#">06 Comments</a>
-									<span class="lnr lnr-bubble"></span>
-								</p>
-							</div>
-						</div>
-						<div class="col-lg-9 col-md-9 ">
-							<a class="posts-title" th:href="@{'/blog/'+${blog.id}}">
-								<h3>[[${blog.title}]]</h3>
-							</a>
-							<div class="feature-img pb-20">
-								<img class="img-fluid" th:src="@{/img/blog/default.jpg}" alt="[[${blog.title}]]">
-							</div>
-							<a th:href="@{'/blog/'+${blog.id}}" class="genric-btn success">View More</a>
-						</div>
+	<section class="container">
+		<div class="content-wrap">
+			<div class="content">
+				<!-- 文字敘述 -->
+				<article class="excerpt-minic excerpt-minic-index">
+					<h2>
+						<span class="red">【今日推荐】</span>
+						<a href="" title="">从下载看我们该如何做事</a>
+					</h2>
+					<p class="note">一次我下载几部电影，发现如果同时下载多部要等上几个小时，然后我把最想看的做个先后排序，去设置同时只能下载一部，结果是不到一杯茶功夫我就能看到最想看的电影。 这就像我们一段时间内想干成很多事情，是同时干还是有选择有顺序的干，结果很不一样。同时...</p>
+				</article>
+				<!-- 標題-分類 -->
+				<div class="title">
+					<h3>最新发布</h3>
+					<div class="more">
+						<a href="">PHP</a>
+						<a href="">JavaScript</a>
+						<a href="">EmpireCMS</a>
+						<a href="">Apache</a>
+						<a href="">MySQL</a>
 					</div>
 				</div>
-				<div class="col-lg-3 sidebar-widgets">
-					<div class="widget-wrap">
-						<div class="single-sidebar-widget post-category-widget">
-							<h4 class="category-title">Post Catgories</h4>
-							<ul class="cat-list" th:each="type : ${types}">
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>[[${type.name}]]</p>
-										<p>[[${type.id}]]</p>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+				<article class="excerpt excerpt-1" th:each="blog : ${blogs.getRecords()}">
+					<a class="focus" th:href="@{'/blog/'+${blog.id}}">
+						<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+					</a>
+					<header>
+						<a class="cat" href="program">
+							[[${typesMap[blog.typeId]}]]
+							<i></i>
+						</a>
+						<h2>
+							<a th:href="@{'/blog/'+${blog.id}}">[[${blog.title}]]</a>
+						</h2>
+					</header>
+					<p class="meta">
+						<time class="time">
+							<i class="glyphicon glyphicon-time"></i>
+							[[${#dates.format(blog.publishTime, 'yyyy-MM-dd')}]]
+						</time>
+						<span class="views">
+							<i class="glyphicon glyphicon-eye-open"></i>
+							[[${blog.views}]] Views
+						</span>
+						<a class="comment" href="article.html#comment">
+							<i class="glyphicon glyphicon-comment"></i>
+							06 Comments
+						</a>
+					</p>
+					<p class="meta note">
+						<th:block th:switch="${blog.content.length()>500}">
+							<th:block th:case="true">[[${#strings.substring(blog.content,0,100)+'...'}]]</th:block>
+							<th:block th:case="false">[[${blog.content}]]</th:block>
+						</th:block>
+					</p>
+					<a class="btn btn-info" type="button" th:href="@{'/blog/'+${blog.id}}"> Read More... </a>
+				</article>
+				<nav class="pagination" style="display: none;">
+					<ul>
+						<li class="prev-page"></li>
+						<li class="active">
+							<span>1</span>
+						</li>
+						<li>
+							<a href="?page=2">2</a>
+						</li>
+						<li class="next-page">
+							<a href="?page=2">下一页</a>
+						</li>
+						<li>
+							<span>共 2 页</span>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
+		<!-- 右側區塊 -->
+		<aside class="sidebar">
+			<div class="fixed">
+				<div class="widget widget-tabs">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#notice" aria-controls="notice" role="tab" data-toggle="tab">网站公告</a>
+						</li>
+						<li role="presentation">
+							<a href="#centre" aria-controls="centre" role="tab" data-toggle="tab">会员中心</a>
+						</li>
+						<li role="presentation">
+							<a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">联系站长</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane notice active" id="notice">
+							<ul>
+								<li>
+									<time datetime="2016-01-04">01-04</time>
+									<a href="" target="_blank">欢迎访问异清轩博客</a>
+								</li>
+								<li>
+									<time datetime="2016-01-04">01-04</time>
+									<a target="_blank" href="">在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</a>
+								</li>
+								<li>
+									<time datetime="2016-01-04">01-04</time>
+									<a target="_blank" href="">在这个小工具中最多可以调用五条</a>
+								</li>
+							</ul>
+						</div>
+						<div role="tabpanel" class="tab-pane centre" id="centre">
+							<h4>需要登录才能进入会员中心</h4>
+							<p>
+								<a data-toggle="modal" data-target="#loginModal" class="btn btn-primary">立即登录</a>
+								<a href="javascript:;" class="btn btn-default">现在注册</a>
+							</p>
+						</div>
+						<div role="tabpanel" class="tab-pane contact" id="contact">
+							<h2>
+								Email:
+								<br />
+								<a href="mailto:admin@ylsat.com" data-toggle="tooltip" data-placement="bottom" title="admin@ylsat.com">admin@ylsat.com</a>
+							</h2>
+						</div>
+					</div>
+				</div>
+				<!-- 捲動固定區塊 -->
+				<div class="widget widget_search">
+					<form class="navbar-form" action="/Search" method="post">
+						<div class="input-group">
+							<input type="text" name="keyword" class="form-control" size="35" placeholder="请输入关键字" maxlength="15" autocomplete="off">
+							<span class="input-group-btn">
+								<button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 右側文字敘述 -->
+			<div class="widget widget_sentence">
+				<h3>每日一句</h3>
+				<div class="widget-sentence-content">
+					<h4>2016年01月05日星期二</h4>
+					<p>
+						Do not let what you cannot do interfere with what you can do.
+						<br />
+						别让你不能做的事妨碍到你能做的事。（John Wooden）
+					</p>
+				</div>
+			</div>
+			<!-- 右側項目 -->
+			<div class="widget widget_hot">
+				<h3>热门文章</h3>
+				<ul>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</aside>
 	</section>
-	<!-- Start footer Area -->
+	<!-- footer start -->
 	<footer th:replace="_fragments :: footer"></footer>
-	<!-- End footer Area -->
+	<!-- JavaScript start -->
 	<th:block th:replace="_fragments :: script"></th:block>
 </body>
 </html>

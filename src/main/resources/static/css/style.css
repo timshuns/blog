@@ -134,7 +134,7 @@ body, input, button, textarea, select {
 	font-family: 'TaurusNormal';
 	src: url('../fonts/TaurusNormal.woff') format('woff'), url('../fonts/TaurusNormal.ttf') format('truetype'), url('../fonts/TaurusNormal.svg') format('svg');
 }
-/*禁止文字选中*/
+/*禁止文字选中
 .user-select {
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -142,6 +142,7 @@ body, input, button, textarea, select {
 	-khtml-user-select: none;
 	user-select: none;
 }
+*/
 /*鼠标选中内容样式*/
 ::selection {
 	background: #444;
@@ -468,7 +469,7 @@ color:#FFF;
 .content {
 	position: relative;
 	min-height: 500px;
-	/*margin-right: 380px;*/
+	margin-right: 380px;
 	margin-bottom: 15px;
 }
 
@@ -826,7 +827,7 @@ color:#FFF;
 	font-size: 15px;
 	line-height: 25px;
 	word-wrap: break-word;
-	cursor: default;
+	/*cursor: default;*/
 }
 .article-content img {
 	margin: 5px auto;
@@ -945,7 +946,7 @@ color:#FFF;
 }
 #respond .comment {
 	position: relative;
-	padding-left: 46px;
+	/*padding-left: 46px;*/
 }
 .comment-title {
 	font-size: 12px;
@@ -1061,7 +1062,7 @@ color:#FFF;
 	-webkit-box-shadow: 0px 0px 5px rgba(51,153,204,.9);
 	box-shadow: 0px 0px 5px rgba(51,153,204,.9);
 }
-#comment-submit {
+.comment-submit {
 	position: absolute;
 	right: -2px;
 	bottom: -2px;
@@ -1080,10 +1081,10 @@ color:#FFF;
 	font-size: 16px;
 	z-index: 6;
 }
-#comment-submit:hover {
-	background: #FBFBFB;
+.comment-submit:hover {
+	background: #008040;
 	border-color: #CCD4D9;
-	color: #3399CC;
+	/*color: #3399CC;*/
 	border-top: solid 1px #F2F2F2;
 }
 .comment-prompt {

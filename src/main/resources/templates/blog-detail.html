@@ -1,400 +1,302 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="_fragments :: head(~{::title})">
-<title>About page</title>
+<title>Empty page</title>
 </head>
-<body>
-	<header id="header" th:replace="_fragments :: header(3)"></header>
+<th:block th:replace="_fragments :: editormd-css"></th:block>
+<body class="single">
 	<!-- #header -->
-	<section class="relative about-banner">
-		<div class="overlay overlay-bg"></div>
-		<div class="container">
-			<div class="row d-flex align-items-center justify-content-center">
-				<div class="about-content col-lg-12">
-					<h1 class="text-white">[[${blog.title}]]</h1>
-					<p class="text-white link-nav">
-						<a href="index.html">Home </a>
-						<span class="lnr lnr-arrow-right"></span>
-						<a href="blog-home.html">Blog </a>
-						<span class="lnr lnr-arrow-right"></span>
-						<a href="blog-single.html">contents</a>
+	<th:block th:include="_fragments :: top-header(3)"></th:block>
+	<!-- content -->
+	<section class="container">
+		<div class="content-wrap">
+			<div class="content">
+				<header class="article-header">
+					<h1 class="article-title">
+						<a href="article.html">[[${blog.title}]]</a>
+					</h1>
+					<div class="article-meta">
+						<span class="item article-meta-time">
+							<time class="time">
+								<i class="glyphicon glyphicon-time"></i>
+								[[${#dates.format(blog.publishTime, 'yyyy-MM-dd')}]]
+							</time>
+						</span>
+						<span class="item article-meta-category">
+							<i class="glyphicon glyphicon-list"></i>
+							<a href="program" title="">后端程序</a>
+						</span>
+						<span class="item article-meta-views">
+							<i class="glyphicon glyphicon-eye-open"></i>
+							[[${blog.views}]] Views
+						</span>
+						<span class="item article-meta-comment">
+							<i class="glyphicon glyphicon-comment"></i>
+							0个不明物体
+						</span>
+					</div>
+				</header>
+				<article class="article-content">
+					<div id="my-content">
+						<textarea style="display: none;" th:text="${blog.content}"></textarea>
+					</div>
+				</article>
+				<div class="article-tags">
+					標籤：
+					<th:block th:each="tag : ${tags}">
+						<a href="" rel="tag">[[${tag.name}]]</a>
+					</th:block>
+				</div>
+				<div class="relates">
+					<div class="title">
+						<h3>相关推荐</h3>
+					</div>
+					<ul>
+						<li>
+							<a href="article.html">php如何判断一个日期的格式是否正确</a>
+						</li>
+						<li>
+							<a href="article.html">php如何判断一个日期的格式是否正确</a>
+						</li>
+					</ul>
+				</div>
+				<div class="title" id="comment">
+					<h3>留言</h3>
+				</div>
+				<div id="respond">
+					<div class="form-group">
+						<label for="nickName">留言名稱</label>
+						<input type="text" name="nickName" id="nickName" class="form-control" placeholder="留言名稱">
+					</div>
+					<div class="form-group">
+						<label for="mail">Email</label>
+						<input type="email" name="mail" id="mail" class="form-control" placeholder="若有問題，留下mail可較即時獲得回覆">
+					</div>
+					<div class="comment">
+						<div class="comment-box">
+							<textarea placeholder="請輸入留言訊息..." name="comment" id="comment" cols="100%" rows="3"></textarea>
+							<div class="comment-ctrl">
+								<div class="comment-prompt">
+									<i class="fa fa-spin fa-circle-o-notch"></i>
+									<span class="comment-prompt-text"></span>
+								</div>
+								<input type="hidden" name="blogId" th:value="${blog.id}" />
+								<button class="comment-submit" type="button" onclick="comment()">留言</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div id="postcomments">
+					<ol class="commentlist">
+						<li class="comment-content">
+							<span class="comment-f">#1</span>
+							<div class="comment-avatar">
+								<img class="avatar" src="images/icon/icon.png" alt="" />
+							</div>
+							<div class="comment-main">
+								<p>
+									来自
+									<span class="address">河南郑州</span>
+									的用户
+									<span class="time">(2016-01-06)</span>
+									<br />
+									这是匿名评论的内容这是匿名评论的内容，这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容。
+								</p>
+							</div>
+						</li>
+					</ol>
+					<div class="quotes">
+						<span class="disabled">首页</span>
+						<span class="disabled">上一页</span>
+						<a class="current">1</a>
+						<a href="">2</a>
+						<span class="disabled">下一页</span>
+						<span class="disabled">尾页</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<aside class="sidebar">
+			<div class="fixed">
+				<div class="widget widget-tabs">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#notice" aria-controls="notice" role="tab" data-toggle="tab">网站公告</a>
+						</li>
+						<li role="presentation">
+							<a href="#centre" aria-controls="centre" role="tab" data-toggle="tab">会员中心</a>
+						</li>
+						<li role="presentation">
+							<a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">联系站长</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane notice active" id="notice">
+							<ul>
+								<li>
+									<time datetime="2016-01-04">01-04</time>
+									<a href="" target="_blank">欢迎访问异清轩博客</a>
+								</li>
+								<li>
+									<time datetime="2016-01-04">01-04</time>
+									<a target="_blank" href="">在这里可以看到前端技术，后端程序，网站内容管理系统等文章，还有我的程序人生！</a>
+								</li>
+								<li>
+									<time datetime="2016-01-04">01-04</time>
+									<a target="_blank" href="">在这个小工具中最多可以调用五条</a>
+								</li>
+							</ul>
+						</div>
+						<div role="tabpanel" class="tab-pane centre" id="centre">
+							<h4>需要登录才能进入会员中心</h4>
+							<p>
+								<a href="javascript:;" class="btn btn-primary">立即登录</a>
+								<a href="javascript:;" class="btn btn-default">现在注册</a>
+							</p>
+						</div>
+						<div role="tabpanel" class="tab-pane contact" id="contact">
+							<h2>
+								Email:
+								<br />
+								<a href="mailto:admin@ylsat.com" data-toggle="tooltip" data-placement="bottom" title="admin@ylsat.com">admin@ylsat.com</a>
+							</h2>
+						</div>
+					</div>
+				</div>
+				<div class="widget widget_search">
+					<form class="navbar-form" action="/Search" method="post">
+						<div class="input-group">
+							<input type="text" name="keyword" class="form-control" size="35" placeholder="请输入关键字" maxlength="15" autocomplete="off">
+							<span class="input-group-btn">
+								<button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="widget widget_sentence">
+				<h3>每日一句</h3>
+				<div class="widget-sentence-content">
+					<h4>2016年01月05日星期二</h4>
+					<p>
+						Do not let what you cannot do interfere with what you can do.
+						<br />
+						别让你不能做的事妨碍到你能做的事。（John Wooden）
 					</p>
 				</div>
 			</div>
-		</div>
-	</section>
-	<!-- contents -->
-	<section class="post-content-area single-post-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-9 posts-list">
-					<div class="single-post row">
-						<div class="col-lg-12">
-							<div id="my-content">
-								<textarea style="display: none;" th:text="${blog.content}"></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="navigation-area">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-								<div class="thumb">
-									<a href="#">
-										<img class="img-fluid" th:src="@{/img/blog/arrow_left.png}" alt="">
-									</a>
-								</div>
-								<div class="detials">
-									<a href="#">
-									<p>Prev Post</p>
-										<h4>Space The Final Frontier</h4>
-									</a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-								<div class="detials">
-									<a href="#">
-									<p>Next Post</p>
-										<h4>Telescopes 101</h4>
-									</a>
-								</div>
-								<div class="thumb">
-									<a href="#">
-										<img class="img-fluid" th:src="@{/img/blog/arrow_right.png}" alt="">
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="comments-area">
-						<h4>05 Comments</h4>
-						<div class="comment-list">
-							<div class="single-comment justify-content-between d-flex">
-								<div class="user justify-content-between d-flex">
-									<div class="thumb">
-										<img src="img/blog/c1.jpg" alt="">
-									</div>
-									<div class="desc">
-										<h5>
-											<a href="#">Emilly Blunt</a>
-										</h5>
-										<p class="date">December 4, 2017 at 3:12 pm</p>
-										<p class="comment">Never say goodbye till the end comes!</p>
-									</div>
-								</div>
-								<div class="reply-btn">
-									<a href="" class="btn-reply text-uppercase">reply</a>
-								</div>
-							</div>
-						</div>
-						<div class="comment-list left-padding">
-							<div class="single-comment justify-content-between d-flex">
-								<div class="user justify-content-between d-flex">
-									<div class="thumb">
-										<img src="img/blog/c2.jpg" alt="">
-									</div>
-									<div class="desc">
-										<h5>
-											<a href="#">Elsie Cunningham</a>
-										</h5>
-										<p class="date">December 4, 2017 at 3:12 pm</p>
-										<p class="comment">Never say goodbye till the end comes!</p>
-									</div>
-								</div>
-								<div class="reply-btn">
-									<a href="" class="btn-reply text-uppercase">reply</a>
-								</div>
-							</div>
-						</div>
-						<div class="comment-list left-padding">
-							<div class="single-comment justify-content-between d-flex">
-								<div class="user justify-content-between d-flex">
-									<div class="thumb">
-										<img src="img/blog/c3.jpg" alt="">
-									</div>
-									<div class="desc">
-										<h5>
-											<a href="#">Annie Stephens</a>
-										</h5>
-										<p class="date">December 4, 2017 at 3:12 pm</p>
-										<p class="comment">Never say goodbye till the end comes!</p>
-									</div>
-								</div>
-								<div class="reply-btn">
-									<a href="" class="btn-reply text-uppercase">reply</a>
-								</div>
-							</div>
-						</div>
-						<div class="comment-list">
-							<div class="single-comment justify-content-between d-flex">
-								<div class="user justify-content-between d-flex">
-									<div class="thumb">
-										<img src="img/blog/c4.jpg" alt="">
-									</div>
-									<div class="desc">
-										<h5>
-											<a href="#">Maria Luna</a>
-										</h5>
-										<p class="date">December 4, 2017 at 3:12 pm</p>
-										<p class="comment">Never say goodbye till the end comes!</p>
-									</div>
-								</div>
-								<div class="reply-btn">
-									<a href="" class="btn-reply text-uppercase">reply</a>
-								</div>
-							</div>
-						</div>
-						<div class="comment-list">
-							<div class="single-comment justify-content-between d-flex">
-								<div class="user justify-content-between d-flex">
-									<div class="thumb">
-										<img src="img/blog/c5.jpg" alt="">
-									</div>
-									<div class="desc">
-										<h5>
-											<a href="#">Ina Hayes</a>
-										</h5>
-										<p class="date">December 4, 2017 at 3:12 pm</p>
-										<p class="comment">Never say goodbye till the end comes!</p>
-									</div>
-								</div>
-								<div class="reply-btn">
-									<a href="" class="btn-reply text-uppercase">reply</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="comment-form">
-						<h4>Leave a Comment</h4>
-						<form>
-							<div class="form-group form-inline">
-								<div class="form-group col-lg-6 col-md-12 name">
-									<input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
-								</div>
-								<div class="form-group col-lg-6 col-md-12 email">
-									<input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''"
-										onblur="this.placeholder = 'Enter email address'">
-								</div>
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
-							</div>
-							<div class="form-group">
-								<textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
-									required=""></textarea>
-							</div>
-							<a href="#" class="primary-btn text-uppercase">Post Comment</a>
-						</form>
-					</div>
-				</div>
-				<div class="col-lg-3 sidebar-widgets">
-					<div class="widget-wrap">
-						<div class="single-sidebar-widget search-widget">
-							<form class="search-form" action="#">
-								<input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'">
-								<button type="submit">
-									<i class="fa fa-search"></i>
-								</button>
-							</form>
-						</div>
-						<div class="single-sidebar-widget user-info-widget">
-							<img src="img/blog/user-info.png" alt="">
-							<a href="#">
-								<h4>Charlie Barber</h4>
-							</a>
-							<p>Senior blog writer</p>
-							<ul class="social-links">
-								<li>
-									<a href="#">
-										<i class="fa fa-facebook"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fa fa-twitter"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fa fa-github"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fa fa-behance"></i>
-									</a>
-								</li>
-							</ul>
-							<p>Boot camps have its supporters andit sdetractors. Some people do not understand why you should have to spend money on boot camp when you can get. Boot camps
-								have itssuppor ters andits detractors.</p>
-						</div>
-						<div class="single-sidebar-widget popular-post-widget">
-							<h4 class="popular-title">Popular Posts</h4>
-							<div class="popular-post-list">
-								<div class="single-post-list d-flex flex-row align-items-center">
-									<div class="thumb">
-										<img class="img-fluid" src="img/blog/pp1.jpg" alt="">
-									</div>
-									<div class="details">
-										<a href="blog-single.html">
-											<h6>Space The Final Frontier</h6>
-										</a>
-										<p>02 Hours ago</p>
-									</div>
-								</div>
-								<div class="single-post-list d-flex flex-row align-items-center">
-									<div class="thumb">
-										<img class="img-fluid" src="img/blog/pp2.jpg" alt="">
-									</div>
-									<div class="details">
-										<a href="blog-single.html">
-											<h6>The Amazing Hubble</h6>
-										</a>
-										<p>02 Hours ago</p>
-									</div>
-								</div>
-								<div class="single-post-list d-flex flex-row align-items-center">
-									<div class="thumb">
-										<img class="img-fluid" src="img/blog/pp3.jpg" alt="">
-									</div>
-									<div class="details">
-										<a href="blog-single.html">
-											<h6>Astronomy Or Astrology</h6>
-										</a>
-										<p>02 Hours ago</p>
-									</div>
-								</div>
-								<div class="single-post-list d-flex flex-row align-items-center">
-									<div class="thumb">
-										<img class="img-fluid" src="img/blog/pp4.jpg" alt="">
-									</div>
-									<div class="details">
-										<a href="blog-single.html">
-											<h6>Asteroids telescope</h6>
-										</a>
-										<p>02 Hours ago</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="single-sidebar-widget ads-widget">
-							<a href="#">
-								<img class="img-fluid" src="img/blog/ads-banner.jpg" alt="">
-							</a>
-						</div>
-						<div class="single-sidebar-widget post-category-widget">
-							<h4 class="category-title">Post Catgories</h4>
-							<ul class="cat-list">
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Technology</p>
-										<p>37</p>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Lifestyle</p>
-										<p>24</p>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Fashion</p>
-										<p>59</p>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Art</p>
-										<p>29</p>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Food</p>
-										<p>15</p>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Architecture</p>
-										<p>09</p>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="d-flex justify-content-between">
-										<p>Adventure</p>
-										<p>44</p>
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="single-sidebar-widget newsletter-widget">
-							<h4 class="newsletter-title">Newsletter</h4>
-							<p>Here, I focus on a range of items and features that we use in life without giving them a second thought.</p>
-							<div class="form-group d-flex flex-row">
-								<div class="col-autos">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-envelope" aria-hidden="true"></i>
-											</div>
-										</div>
-										<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''"
-											onblur="this.placeholder = 'Enter email'">
-									</div>
-								</div>
-								<a href="#" class="bbtns">Subcribe</a>
-							</div>
-							<p class="text-bottom">You can unsubscribe at any time</p>
-						</div>
-						<div class="single-sidebar-widget tag-cloud-widget">
-							<h4 class="tagcloud-title">Tag Clouds</h4>
-							<ul>
-								<li>
-									<a href="#">Technology</a>
-								</li>
-								<li>
-									<a href="#">Fashion</a>
-								</li>
-								<li>
-									<a href="#">Architecture</a>
-								</li>
-								<li>
-									<a href="#">Fashion</a>
-								</li>
-								<li>
-									<a href="#">Food</a>
-								</li>
-								<li>
-									<a href="#">Technology</a>
-								</li>
-								<li>
-									<a href="#">Lifestyle</a>
-								</li>
-								<li>
-									<a href="#">Art</a>
-								</li>
-								<li>
-									<a href="#">Adventure</a>
-								</li>
-								<li>
-									<a href="#">Food</a>
-								</li>
-								<li>
-									<a href="#">Lifestyle</a>
-								</li>
-								<li>
-									<a href="#">Adventure</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+			<div class="widget widget_hot">
+				<h3>热门文章</h3>
+				<ul>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="">
+							<span class="thumbnail">
+								<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
+							</span>
+							<span class="text">php如何判断一个日期的格式是否正确</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-time"></i>
+								2016-1-4
+							</span>
+							<span class="muted">
+								<i class="glyphicon glyphicon-eye-open"></i>
+								120
+							</span>
+						</a>
+					</li>
+				</ul>
 			</div>
-		</div>
+		</aside>
 	</section>
-	<footer th:replace="_fragments :: footer" class="footer-area section-gap"></footer>
+	<!-- Start footer Area -->
+	<footer th:replace="_fragments :: footer"></footer>
 	<!-- End footer Area -->
 	<th:block th:replace="_fragments :: script"></th:block>
+	<th:block th:replace="_fragments :: editormd"></th:block>
+	<script>
+	 function comment(){
+		 var nickName = $("#nickName").val();
+		 var mail = $("#mail").val();
+		 var comment = $("#comment").val();
+		 $.ajax({
+	         url: formUpdate.action,
+	         type: 'POST',
+	         data : {
+	        	 nickName : nickName,
+	        	 mail: mail,
+	        	 comment: comment
+				},
+	     }).done(function(res) {
+	         
+	     }).fail(res => {
+	        
+	     })
+	 }
+	</script>
 </body>
 </html>
