@@ -15,21 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.timshuns.pojo.Tag;
-import com.timshuns.service.TagService;
+import com.timshuns.pojo.Type;
+import com.timshuns.service.TypeService;
 import com.timshuns.util.PageUtil;
 
+/** 類別管理 */
 @Controller
-@RequestMapping("/admin/tags")
-public class TagController {
+@RequestMapping("/admin/types")
+public class AdminTypeController {
+
   @Autowired
-  private TagService tagService;
+  private TypeService typeService;
 
   /** 類別起始頁面 */
   @GetMapping("/index")
-  public String readTagPage(Model model,
+  public String readTypePage(Model model,
       @RequestParam(value = "pageNumber", required = false) String pageNumber,
-      @RequestParam(value = "tagName", required = false) String tagName) {
+      @RequestParam(value = "typeName", required = false) String typeName,
+      @RequestParam(value = "typeStatus", required = false, defaultValue = "-1") int typeStatus) {
     // 參數判斷
     Long pageNumberLong = 1L;
 
@@ -39,17 +42,17 @@ public class TagController {
       // 轉換失敗，改用預設值
     }
 
-    Page<Tag> pages = tagService.getTags(pageNumberLong,tagName);
+    Page<Type> pages = typeService.getTypes(pageNumberLong, typeName, typeStatus);
 
     // 查無資料
     if (pages == null) {
       model.addAttribute("pages", null);
-      return "admin/tags";
+      return "admin/types";
     }
 
     // 判斷當前頁數是否正確
     if (pageNumberLong > pages.getPages()) {
-      pages = tagService.getTags(pages.getPages(),tagName);
+      pages = typeService.getTypes(pages.getPages(), typeName, typeStatus);
     } else if (pageNumberLong <= 0) {
       pages.setCurrent(1L);
     } else {
@@ -57,35 +60,39 @@ public class TagController {
     }
     List<Integer> pageNumbers = PageUtil.pageNumbers(pages);
     model.addAttribute("pages", pages);
+    model.addAttribute("typeName", typeName);
+    model.addAttribute("typeStatus", typeStatus);
     model.addAttribute("pageNumbers", pageNumbers);
-    model.addAttribute("tagName", tagName);
-    return "admin/tags";
+    return "admin/types";
   }
 
   /** 新增類別 */
   @PostMapping("/save")
   @ResponseBody
-  public ResponseEntity<String> saveTag(@RequestParam("name") String name) {
-    Tag tag = new Tag();
-    tag.setName(name);
+  public ResponseEntity<String> saveType(@RequestParam("name") String name,
+      @RequestParam("status") int status) {
+    Type type = new Type();
+    type.setName(name);
+    type.setStatus(status);
 
-    if (tagService.saveTag(tag)) {
+    if (typeService.saveType(type) > 0) {
       return ResponseEntity.ok("新增成功");
     } else {
       return new ResponseEntity<String>("新增失敗", HttpStatus.BAD_REQUEST);
     }
-
   }
 
   /** 修改類別 */
   @PutMapping("/update/{id}")
   @ResponseBody
-  public ResponseEntity<String> updateTag(
-      @RequestParam(required = false, name = "name") String name, @PathVariable long id) {
-    Tag tag = new Tag();
-    tag.setId(id);
-    tag.setName(name);
-    if (tagService.updateTag(tag)) {
+  public ResponseEntity<String> updateType(
+      @RequestParam(required = false, name = "name") String name,
+      @RequestParam("status") int status, @PathVariable long id) {
+    Type type = new Type();
+    type.setId(id);
+    type.setName(name);
+    type.setStatus(status);
+    if (typeService.updateType(type)) {
       return ResponseEntity.ok("修改成功");
     } else {
       return new ResponseEntity<String>("修改失敗", HttpStatus.BAD_REQUEST);
@@ -95,8 +102,8 @@ public class TagController {
   /** 刪除類別 */
   @DeleteMapping("/delete/{id}")
   @ResponseBody
-  public ResponseEntity<String> deleteTag(@PathVariable long id) {
-    if (tagService.deleteTag(id)) {
+  public ResponseEntity<String> deleteType(@PathVariable long id) {
+    if (typeService.deleteType(id)) {
       return ResponseEntity.ok("刪除成功");
     } else {
       return new ResponseEntity<String>("刪除失敗", HttpStatus.BAD_REQUEST);

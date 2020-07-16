@@ -28,7 +28,7 @@ import com.timshuns.util.PageUtil;
 
 @Controller
 @RequestMapping("/admin/blogs")
-public class BlogController {
+public class AdminBlogController {
 
   @Autowired private BlogService blogService;
 

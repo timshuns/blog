@@ -13,7 +13,7 @@
 			<div class="content">
 				<header class="article-header">
 					<h1 class="article-title">
-						<a href="article.html">[[${blog.title}]]</a>
+						<a href="#">[[${blog.title}]]</a>
 					</h1>
 					<div class="article-meta">
 						<span class="item article-meta-time">
@@ -22,18 +22,12 @@
 								[[${#dates.format(blog.publishTime, 'yyyy-MM-dd')}]]
 							</time>
 						</span>
-						<span class="item article-meta-category">
-							<i class="glyphicon glyphicon-list"></i>
-							<a href="program" title="">后端程序</a>
-						</span>
-						<span class="item article-meta-views">
-							<i class="glyphicon glyphicon-eye-open"></i>
-							[[${blog.views}]] Views
-						</span>
-						<span class="item article-meta-comment">
-							<i class="glyphicon glyphicon-comment"></i>
-							0个不明物体
-						</span>
+					</div>
+					<div class="article-tags">
+						標籤：
+						<th:block th:each="tag : ${tags}">
+							<a href="" rel="tag">[[${tag.name}]]</a>
+						</th:block>
 					</div>
 				</header>
 				<article class="article-content">
@@ -41,27 +35,25 @@
 						<textarea style="display: none;" th:text="${blog.content}"></textarea>
 					</div>
 				</article>
-				<div class="article-tags">
-					標籤：
-					<th:block th:each="tag : ${tags}">
-						<a href="" rel="tag">[[${tag.name}]]</a>
-					</th:block>
-				</div>
-				<div class="relates">
-					<div class="title">
-						<h3>相关推荐</h3>
-					</div>
-					<ul>
-						<li>
-							<a href="article.html">php如何判断一个日期的格式是否正确</a>
+				<nav aria-label="...">
+					<ul class="pager">
+						<li class="previous">
+							<a href="#">
+								<span aria-hidden="true">&larr;</span>
+								Older
+							</a>
 						</li>
-						<li>
-							<a href="article.html">php如何判断一个日期的格式是否正确</a>
+						<li class="next">
+							<a href="#">
+								Newer
+								<span aria-hidden="true">&rarr;</span>
+							</a>
 						</li>
 					</ul>
-				</div>
+				</nav>
+				<!-- 留言 -->
 				<div class="title" id="comment">
-					<h3>留言</h3>
+					<h2>留言</h2>
 				</div>
 				<div id="respond">
 					<div class="form-group">
@@ -69,18 +61,18 @@
 						<input type="text" name="nickName" id="nickName" class="form-control" placeholder="留言名稱">
 					</div>
 					<div class="form-group">
-						<label for="mail">Email</label>
-						<input type="email" name="mail" id="mail" class="form-control" placeholder="若有問題，留下mail可較即時獲得回覆">
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" class="form-control" placeholder="若有問題，留下mail可較即時獲得回覆">
 					</div>
 					<div class="comment">
 						<div class="comment-box">
-							<textarea placeholder="請輸入留言訊息..." name="comment" id="comment" cols="100%" rows="3"></textarea>
+							<textarea class="comment-textarea" placeholder="請輸入留言訊息..." name="content" id="content" cols="100%" rows="3"></textarea>
 							<div class="comment-ctrl">
 								<div class="comment-prompt">
 									<i class="fa fa-spin fa-circle-o-notch"></i>
 									<span class="comment-prompt-text"></span>
 								</div>
-								<input type="hidden" name="blogId" th:value="${blog.id}" />
+								<input type="hidden" id="formAction" name="formAction" th:value="@{'/blog/comment/'+${blog.id}}" />
 								<button class="comment-submit" type="button" onclick="comment()">留言</button>
 							</div>
 						</div>
@@ -89,31 +81,22 @@
 				<hr>
 				<div id="postcomments">
 					<ol class="commentlist">
-						<li class="comment-content">
+						<li class="comment-content" th:each="comment : ${comments}">
 							<span class="comment-f">#1</span>
 							<div class="comment-avatar">
 								<img class="avatar" src="images/icon/icon.png" alt="" />
 							</div>
 							<div class="comment-main">
 								<p>
-									来自
-									<span class="address">河南郑州</span>
-									的用户
-									<span class="time">(2016-01-06)</span>
+									來自
+									<span class="address">[[${comment.nickName}]]</span>
+									<span class="time">([[${#dates.format(comment.createTime, 'yyyy-MM-dd')}]])</span>
 									<br />
-									这是匿名评论的内容这是匿名评论的内容，这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容这是匿名评论的内容。
+									[[${comment.content}]]
 								</p>
 							</div>
 						</li>
 					</ol>
-					<div class="quotes">
-						<span class="disabled">首页</span>
-						<span class="disabled">上一页</span>
-						<a class="current">1</a>
-						<a href="">2</a>
-						<span class="disabled">下一页</span>
-						<span class="disabled">尾页</span>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -165,14 +148,16 @@
 					</div>
 				</div>
 				<div class="widget widget_search">
-					<form class="navbar-form" action="/Search" method="post">
-						<div class="input-group">
-							<input type="text" name="keyword" class="form-control" size="35" placeholder="请输入关键字" maxlength="15" autocomplete="off">
-							<span class="input-group-btn">
-								<button class="btn btn-default btn-search" name="search" type="submit">搜索</button>
-							</span>
-						</div>
-					</form>
+					<h3>文章目錄</h3>
+					<div class="widget-sentence-content">
+						<ul class="list-group">
+							<li class="list-group-item">Cras justo odio</li>
+							<li class="list-group-item">Dapibus ac facilisis in</li>
+							<li class="list-group-item">Morbi leo risus</li>
+							<li class="list-group-item">Porta ac consectetur ac</li>
+							<li class="list-group-item">Vestibulum at eros</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div class="widget widget_sentence">
@@ -281,20 +266,21 @@
 	<script>
 	 function comment(){
 		 var nickName = $("#nickName").val();
-		 var mail = $("#mail").val();
-		 var comment = $("#comment").val();
+		 var email = $("#email").val();
+		 var content = $("#content").val();
+		 var formAction = $("#formAction").val();
 		 $.ajax({
-	         url: formUpdate.action,
+	         url: formAction,
 	         type: 'POST',
 	         data : {
 	        	 nickName : nickName,
-	        	 mail: mail,
-	        	 comment: comment
+	        	 email: email,
+	        	 content: content
 				},
 	     }).done(function(res) {
-	         
+	         console.info(res);
 	     }).fail(res => {
-	        
+	         console.info(res);
 	     })
 	 }
 	</script>

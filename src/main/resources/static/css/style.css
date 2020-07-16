@@ -875,7 +875,7 @@ color:#FFF;
 }
 /*文章标签*/
 .article-tags {
-	margin: 30px 0;
+	margin: 10px 0;
 	text-align: center;
 	cursor: default;
 }
@@ -919,7 +919,7 @@ color:#FFF;
 	text-decoration: underline;
 }
 /*评论*/
-#comment {
+.comment {
 	margin-bottom: 15px;
 	font-size: 16px;
 }
@@ -983,7 +983,7 @@ color:#FFF;
 	position: relative;
 	z-index: 10;
 }
-#comment-textarea {
+.comment-textarea {
 	width: 100%;
 	resize: none;
 	overflow-x: hidden;
@@ -995,23 +995,23 @@ color:#FFF;
 	color: #666;
 	height: 68px;
 }
-#comment-textarea::-webkit-scrollbar {
+.comment-textarea::-webkit-scrollbar {
  width:3px;
  height:3px;
  background:#CCC;
  border-radius:5px;
 }
-#comment-textarea::-webkit-scrollbar-button {
+.comment-textarea::-webkit-scrollbar-button {
  display:none;
 }
-#comment-textarea::-webkit-scrollbar-track-piece {
+.comment-textarea::-webkit-scrollbar-track-piece {
  display:none;
 }
-#comment-textarea::-webkit-scrollbar-thumb {
+.comment-textarea::-webkit-scrollbar-thumb {
  background:#999;
  border-radius:5px;
 }
-#comment-textarea::-webkit-scrollbar-thumb:hover {
+.comment-textarea::-webkit-scrollbar-thumb:hover {
  background:#3399CC;
 }
 .comment-ctrl {
@@ -1144,7 +1144,7 @@ color:#FFF;
 }
 .comment-f {
 	position: absolute;
-	top: 15px;
+	/*top: 15px;*/
 	right: 0;
 	font-size: 16px;
 	color: #ccc;
@@ -1199,7 +1199,7 @@ color:#FFF;
 }
 .quotes span, .quotes a {
 	padding: 5px 10px;
-	margin: 0 3px;
+	margin: 0 15px;
 	background: #EEE;
 	border-radius: 5px;
 }

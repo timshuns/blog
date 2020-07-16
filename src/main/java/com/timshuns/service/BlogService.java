@@ -14,4 +14,6 @@ public interface BlogService {
   boolean updateBlog(Blog blog);
 
   boolean deleteBlog(Long id);
+  
+  void updateViews(Long id);
 }

@@ -77,4 +77,9 @@ public class BlogServiceImpl implements BlogService {
     // TODO Auto-generated method stub
     return false;
   }
+
+  @Override
+  public void updateViews(Long id) {
+     blogMapper.updateViews(id);
+  }
 }

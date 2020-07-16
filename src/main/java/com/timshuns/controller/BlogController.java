@@ -10,24 +10,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.timshuns.pojo.Blog;
+import com.timshuns.pojo.Comment;
 import com.timshuns.pojo.Tag;
 import com.timshuns.pojo.Type;
 import com.timshuns.service.BlogService;
+import com.timshuns.service.CommentService;
 import com.timshuns.service.TagService;
 import com.timshuns.service.TypeService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class BlogsController {
+public class BlogController {
 
   @Autowired private TypeService typeService;
 
   @Autowired private BlogService blogService;
 
   @Autowired private TagService tagService;
+  
+  @Autowired private CommentService commentService;
 
   @GetMapping({"/blog.html"})
   public String index(
@@ -58,7 +63,7 @@ public class BlogsController {
     Map<String, List<Tag>> blogTags = new HashMap<String, List<Tag>>();
     for (Blog blog : blogs.getRecords()) {
       blogTags.put(String.valueOf(blog.getId()), tagService.getTagsByBlogId(blog.getId()));
-    }
+    }    
 
     model.addAttribute("typesMap", typesMap);
     model.addAttribute("blogTags", blogTags);
@@ -73,19 +78,14 @@ public class BlogsController {
 
     Blog blog = blogService.getBlog(id);
     List<Tag> tags = tagService.getTagsByBlogId(id);
+    
+    //查詢留言
+    List<Comment> comments = commentService.getCommentsByBlogId(id);
+    
+    //更新點閱數
+    blogService.updateViews(id);
 
-    model.addAttribute("blog", blog);
-    model.addAttribute("tags", tags);
-    return "blog-detail";
-  }
-  
-  @PostMapping({"/comment/{id}"})
-  public String comment(Model model, @PathVariable long id) {
-    log.info("blog-detail");
-
-    Blog blog = blogService.getBlog(id);
-    List<Tag> tags = tagService.getTagsByBlogId(id);
-
+    model.addAttribute("comments", comments);
     model.addAttribute("blog", blog);
     model.addAttribute("tags", tags);
     return "blog-detail";
